@@ -17,9 +17,7 @@ const translateText = async (text, to) => {
 
   const translated = await Promise.all(
     tokens.map(async (t) =>
-      skip(t)
-        ? t
-        : (await translate(t, { to }).catch(() => ({ text: t }))).text
+      skip(t) ? t : (await translate(t, { to }).catch(() => ({ text: t }))).text
     )
   );
 
@@ -31,3 +29,5 @@ process.on("message", async (msg) => {
   const translated = await translateText(text, lang);
   process.send({ id, translated });
 });
+
+module.exports = { translate };

@@ -6,6 +6,10 @@ const TAG_RE = /(<[^>]+>)/g;
 const STYLE_RE = /<style[^>]*>[\s\S]*?<\/style>/gi;
 const WORKER_COUNT = Math.min(4, os.cpus().length);
 
+// Total number of logical CPU cores
+const cpuCount = os.cpus().length;
+console.log(`🧠 Available CPU cores: ${cpuCount}`);
+
 let workers = [];
 let current = 0;
 let taskId = 0;

@@ -1,12 +1,13 @@
 {
    "scripts": {
-    "start": "node server.js",
-    "build": "echo 'No build step'"
-  },
-  "dependencies": {
-    "@iamtraction/google-translate": "^2.0.1",
-    "cors": "^2.8.5",
-    "express": "^5.1.0",
-    "multer": "^2.0.2"
-  }
+      "start": "node server.js",
+      "build": "echo 'No build step'"
+   },
+   "dependencies": {
+      "@iamtraction/google-translate": "^2.0.1",
+      "cors": "^2.8.5",
+      "express": "^5.1.0",
+      "morgan": "^1.10.1",
+      "multer": "^2.0.2"
+   }
 }
