@@ -40,6 +40,8 @@ app.post("/upload", upload.single("file"), async (req, res) => {
   }
 });
 
+app.get('/',(req,res)=>res.send('welcome to translator'))
+
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
