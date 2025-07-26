@@ -1,50 +1,2364 @@
+<!DOCTYPE html>
 <html style="background-color:#fff!important">
 
-  <head>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="stylesheets/pdf.css" />
-  </head>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="stylesheets/pdf.css">
+</head>
 
-  <body style="background-color:#fff;position:relative">
+<body style="background-color:#fff;position:relative">
     {{#if is_contract}}
-      <div
-        class="container"
-        id="A4"
-        style="background:#fff;max-width:970px;font-family:Arial"
-      >
-        <div
-          class="A4"
-          style="width:850px;display:table;height:1200px;position:relative"
-        >
-          <div
-            class="top_blue_strip"
-            style="width:100%;height:10px;background-color:#0a5094"
-          ></div>
-          <div class="headerLogo" style="display:flex;margin:40px 40px 0 40px">
-            <div style="width:20%"><img
-                src="{{doctor_image}}"
-                style="max-width:100%;max-height:60px"
-              /></div>
+    <div class="container" id="A4"
+        style="background:#fff;max-width:970px;font-family:Arial">
+        <div class="A4" style="width:850px;display:table;height:1200px;position:relative">
+            <div class="top_blue_strip" style="width:100%;height:10px;background-color:#0a5094"></div>
+            <div class="headerLogo" style="display:flex;margin:40px 40px 0 40px">
+                <div style="width:20%"><img src="{{doctor_image}}" style="max-width:100%;max-height:60px"></div>
+                <div style="width:52%;font-size:27px;font-weight:700;text-align:center">
+                    <p>Payment Plan Contract</p><img src="images/PNG/powered_by_deneftis.svg" style="width:31%">
+                </div>
+                <div style="margin-top:20px">
+                    <p>Contract Code :<b>{{contract_code}}</b></p>
+                    <p>Contract Status:<b>{{payment_status}}</b></p>
+                </div>
+            </div>
+            <div class="content" style="margin:0 40px;padding-top:10px">
+                <div class="customer_details_container"
+                    style="width:100%;background-color:#d9d9d9;border-radius:4px;display:flex;padding:30px">
+                    <div class="customer_details" style="width:50%">
+                        <p
+                            style="font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:#767676">
+                            Bill to</p>
+                        <p style="font-size:20px;font-weight:700;margin:11px 0">{{customer_name}}</p>
+                        <p>{{#if is_minor}}<span style="color:#626262;border-bottom:transparent">Guardian
+                                :</span>{{guardian_name}}{{/if}}
+                        </p>
+                        <p>{{#if patient_email}}<span style="color:#626262;border-bottom:transparent">Email
+                                :</span>{{patient_email}}{{/if}}
+                        </p>
+                        <p>{{#if patient_mobile}}<span style="color:#626262;border-bottom:transparent">Phone
+                                :</span>{{patient_mobile}}{{/if}}
+                        </p>
+                        <p>{{#if date_of_birth}}<span style="color:#626262;border-bottom:transparent">Date of Birth
+                                :</span>{{date_of_birth}}{{/if}}
+                        </p>
+                        <p>{{#if patient_ssn_display}}<span style="color:#626262;border-bottom:transparent">SSN
+                                :</span>{{patient_ssn_display}}{{/if}}
+                        </p>
+                        <p>{{#if dl_number}}<span style="color:#626262;border-bottom:transparent">DL Number
+                                :</span>{{dl_number}}{{/if}}
+                        </p>
+                        <p style="margin-top:15px">{{#if patient_address}}<span
+                                style="color:#626262;border-bottom:transparent">Address
+                                :</span>{{patient_address}}{{/if}}
+                        </p>
+                    </div>
+                    <div class="business_details" style="width:50%">
+                        <p
+                            style="font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:#767676">
+                            Pay to</p>{{#if is_practice_details}} {{!--<p
+                            style="font-size:20px;font-weight:700;margin:11px 0">{{doctor_name}}</p>--}}<p><span
+                                style="color:#626262;border-bottom:transparent">Business Name :</span>{{practice_name}}
+                        </p>
+                        <p><span style="color:#626262;border-bottom:transparent">Email :</span>{{practice_email}}</p>
+                        <p><span style="color:#626262;border-bottom:transparent">Phone :</span>{{practice_mobile}}</p>
+                        {{else}} {{!--<p style="font-size:20px;font-weight:700;margin:11px 0">{{doctor_name}}</p>--}}<p>
+                            <span style="color:#626262;border-bottom:transparent">Email :</span>{{doctor_email}}
+                        </p>
+                        <p><span style="color:#626262;border-bottom:transparent">Phone :</span>{{doctor_mobile}}</p>
+                        {{/if}}
+
+                    </div>
+                </div>
+                <div
+                    style="width:100%;border-radius:4px;border:1px solid #000;display:flex;flex-wrap:wrap;margin:30px 0 10px 0;overflow:hidden">
+                    <div
+                        style="width:50%;background:#0a5094;text-align:center;color:#fff;font-size:22px;border-bottom:1px solid #000;padding:15px 0">
+                        Next Payment Date</div>
+                    <div
+                        style="width:50%;background:#0a5094;text-align:center;color:#fff;font-size:22px;border-bottom:1px solid #000;padding:15px 0">
+                        Recurring Amount</div>
+                    <div
+                        style="width:50%;text-align:center;padding:15px 0;font-size:23px;border-right:1px solid #d7d7d7;font-weight:700">
+                        {{next_payment_date}}</div>
+                    <div style="width:50%;text-align:center;padding:15px 0;font-size:23px;font-weight:700">
+                        ${{totalrecurringamount}}<span
+                            style="border-bottom:transparent;color:grey;font-size:15px;font-weight:400"><br>{{recurring_amount}}</span>
+                    </div>
+                </div>
+                <div style="font-size:16px"><b>Note: All the payments will be displayed as {{statement_descriptor}} on
+                        your Bank/Card statement.</b></div>
+                <h4 style="font-size:23px;font-weight:700;margin-top:20px;text-align:left">Payment Plan Details</h4>
+                <div style="display:flex;flex-wrap:wrap;border:1px solid #000;border-radius:4px">
+                    <div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>Est. Service Cost</p>
+                        <p style="font-size:17px;font-weight:700">{{treatment_amount}}</p>
+                    </div>
+                    <div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>Est. Payment Plan Amount</p>
+                        <p style="font-size:17px;font-weight:700">{{financed_amount}}</p>
+                    </div>
+                    <div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>{{#if is_arv2_partial_payment}}Partial Payment{{else}}Down Payment{{/if}}
+
+                        </p>
+                        <p style="font-size:17px;font-weight:700">{{downpayment_amount}}</p>
+                    </div>{{#if is_deferred_contract}}<div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>Interest Rate (During Deferred)</p>
+                        <p style="font-size:17px;font-weight:700">No Interest</p>
+                    </div>
+                    <div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p style="line-height: 1 !important; width: 105%;">Interest Rate (After Deferred) {{#if if_applicable}} (If Applicable) / Payment Missed / Contract Edited:{{/if}}</p>
+                        <p style="font-size:17px;font-weight:700;margin-top:-8px">{{interest_rate}} 
+                            {{#if is_deferred_contract_1}}
+                            {{else}}
+                                {{#if is_compounded_interest}}
+                                    <sup>C</sup>{{else}}<sup>F</sup>
+                                {{/if}}
+                            {{/if}}
+                           
+                        </p>
+                    </div>{{else}}<div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>Interest Rate</p>
+                        <p style="font-size:17px;font-weight:700">{{interest_rate}} {{#if check_interest}} {{#if
+                            is_compounded_interest}}<sup>C</sup>{{else}}<sup>F</sup>{{/if}}
+                            {{/if}}
+                        </p>
+                    </div>
+                    {{/if}}
+                    <div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>Total Number Of Payments</p>
+                        <p style="font-size:17px;font-weight:700">{{number_of_payments}}</p>
+                    </div>{{#if is_deferred_contract}}<div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>Deferred Duration</p>
+                        <p style="font-size:17px;font-weight:700">{{deferred_duration}}</p>
+                    </div>
+                    {{/if}}
+                    <div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>Customer Pay Off Amount</p>
+                        <p style="font-size:17px;font-weight:700">{{patient_payoff_amount}}</p>
+                    </div>
+                    <div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>Total Balance</p>
+                        <p style="font-size:17px;font-weight:700">{{remaining_amount}}</p>
+                    </div>
+                    <div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>Enrollment Date</p>
+                        <p style="font-size:17px;font-weight:700">{{date_added}}</p>
+                    </div>
+                    <div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>Recurring Starting Date</p>
+                        <p style="font-size:17px;font-weight:700">{{start_date}}</p>
+                    </div>
+                    <div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>Remaining Payments</p>
+                        <p style="font-size:17px;font-weight:700">{{remaining_payments}}</p>
+                    </div>
+                </div>
+                <div style="text-align:right;margin-top:12px;color:grey">F: Fixed Interest, C: Compound Interest</div>
+                <div style="width:100%;position:absolute;bottom:30px;left:0;padding:12px 5rem">
+                    <div style="width:100%;display:flex;justify-content:space-between">
+                        <div
+                            style="width:max-content;width:max-content;display:flex;flex-direction:column;justify-content:center">
+                            {{#if from_split}}<label style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">Contract made Remotely
+                                    on</span><b>{{date_added}} at {{contract_time}}</b>{{#if show_ip}}<br><label
+                                    style="font-size:12px;font-weight:400"><span
+                                        style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                            </label>{{else}}<label style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">Contract made in Office
+                                    on</span><b>{{date_added}} at {{contract_time}}</b>{{#if show_ip}}<br><label
+                                    style="font-size:12px;font-weight:400"><span
+                                        style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                            </label>{{/if}}
+
+                        </div>
+                        {{#if patient_signature}}
+                            <div style="text-align:right;max-width:35%;">
+                                <img src="{{patient_signature}}" id="signImg" style="height:60px; max-width:100%;" />
+                                <p style="font-size: 12px;color:grey">Customer Signature</p>
+                            </div>
+                        {{/if}}
+                    </div>
+                    <div>
+                        <p style="font-size:12px;font-weight:400;color:grey">{{#if is_practice_details}}
+                            {{practice_name}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;
+                            {{practice_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{practice_email}} {{else}}
+                            {{doctor_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{doctor_email}} {{/if}}
+                        </p>
+                    </div>
+                </div>
+            </div>
             <div
-              style="width:52%;font-size:27px;font-weight:700;text-align:center"
-            >
-              <p>Payment Plan Contract</p><img
-                src="images/PNG/powered_by_deneftis.svg"
-                style="width:31%"
-              />
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <div></div>
+                <p style="width:fit-content;color:grey">Page 1 of {{total_pages}}</p>
             </div>
-            <div style="margin-top:20px">
-              <p>Contract Code :<b>{{contract_code}}</b></p>
-              <p>Contract Status:<b>{{payment_status}}</b></p>
+        </div>{{#if is_service_record_or_payments}}
+        <div class="A4"
+            style="page-break-before:always;height:1200px;width:850px;display:table;position:relative">
+            <div class="top_blue_strip" style="width:100%;height:10px;background-color:#0a5094"></div>
+            <div class="headerLogo" style="display:flex;margin:40px 40px 0 40px">
+                <div style="width:20%"><img src="{{doctor_image}}" style="max-width:100%;max-height:60px"></div>
+                <div style="width:52%;font-size:27px;font-weight:700;text-align:center">
+                    <p>Payment Plan Contract</p><img src="images/PNG/powered_by_deneftis.svg" style="width:31%">
+                </div>
+                <div style="margin-top:20px">
+                    <p>Contract Code :<b>{{contract_code}}</b></p>
+                    <p>Contract Status:<b>{{payment_status}}</b></p>
+                </div>
             </div>
-          </div>
-        </div>{{#if is_service_record_or_payments}}{{/if}}
-      </div>
+            <div class="content" style="height:1045px">{{#if is_service_record}}<h5
+                    style="font-size:23px;font-weight:700;margin-top:20px;text-align:left">Service Cost Details</h5>
+                {{/if}}
+                {{#if is_service_record}}<div
+                    style="display:flex;flex-wrap:wrap;border:1px solid #000;border-radius:4px">
+                    <div style="background:#0a5094;width:100%;display:flex;color:#fff">
+                        <div style="width:20%;padding:18px">S. No.</div>
+                        <div
+                            style="width:60%;padding:18px;border-left:1px solid #d7d7d7;border-right:1px solid #d7d7d7">
+                            Service</div>
+                        <div style="width:20%;padding:18px">Price</div>
+                    </div>{{#each serviceRecord}}<div class="serviceTable"
+                        style="width:100%;display:flex;flex-wrap:wrap">
+                        <div style="width:20%;padding:18px">{{index}}</div>
+                        <div
+                            style="width:60%;padding:18px;border-left:1px solid #d7d7d7;border-right:1px solid #d7d7d7;word-break:break-all">
+                            {{service}}</div>
+                        <div style="width:20%;padding:18px;word-break:break-all">{{price}}</div>
+                    </div>{{/each}}
+                </div>
+                {{/if}}
+                {{#if show_first_page_payments}}<div>
+                    <h4 style="font-size:23px;font-weight:700;margin-top:20px;text-align:left">Payment Details</h4>
+                    <div
+                        style="width:100%;margin-top:20px;border-radius:4px;background-color:#fff;padding:0;border:1px solid #000">
+                        <table style="border-collapse:collapse;width:100%">
+                            <thead>
+                                <tr style="font-size:12px;color:#fff;background:#0a5094">{{#if from_business}}<th
+                                        style="padding:18px;text-align:left;font-size:14px;font-weight:normalborder-right: 1px solid #d7d7d7">
+                                        Recurring Date</th>{{/if}}
+                                    <th
+                                        style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">
+                                        Transaction Date</th>
+                                    <th
+                                        style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">
+                                        Status</th>
+                                    <th
+                                        style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">
+                                        Payment Type</th>
+                                    <th style="padding:18px;text-align:left;font-size:14px;font-weight:400">Transaction
+                                        Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>{{#each firstPagePayments}}<tr
+                                    style="font-size:18px;color:#000;border-top:1px solid #d7d7d7">{{#if from_business}}
+                                    <th
+                                        style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">
+                                        {{payment_date}}</th>{{/if}}
+                                    <th
+                                        style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">
+                                        {{date_added}}</th>
+                                    <th
+                                        style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">
+                                        {{payment_status}}</th>
+                                    <th
+                                        style="padding:18px;text-align:left;text-transform:capitalize;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">
+                                        {{pt_name}}</th>
+                                    <th
+                                        style="padding:18px;text-align:left;text-transform:capitalize;font-size:14px;font-weight:400">
+                                        {{amount_deducted}}</th>
+                                </tr>{{/each}}</tbody>
+                        </table>
+                    </div>{{#if is_only_one_payment_pages}}<div style="margin-top:5px;font-size:16px"><b>Note: All the
+                            payments will be displayed as {{statement_descriptor}} on your Bank/Card statement.</b>
+                    </div>
+                    {{/if}}
+
+                </div>
+                {{/if}}
+            </div>
+            <div style="width:100%;position:absolute;bottom:30px;left:0;padding:12px 81px">
+                <div style="width:100%;display:flex;justify-content:space-between">
+                    <div
+                        style="width:max-content;width:max-content;display:flex;flex-direction:column;justify-content:center">
+                        {{#if from_split}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey">Contract made Remotely on</span><b>{{date_added}} at
+                                {{contract_time}}</b>{{#if show_ip}}<br><label
+                                style="font-size:12px;font-weight:400"><span
+                                    style="color:grey">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{else}}<label style="font-size:12px;font-weight:400"><span style="color:grey">Contract
+                                made in Office
+                                on</span><b>{{date_added}} at {{contract_time}}</b>{{#if show_ip}}<br><label
+                                style="font-size:12px;font-weight:400"><span
+                                    style="color:grey">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{/if}}
+
+                    </div>
+                    {{#if patient_signature}}
+                        <div style="text-align:right;max-width:35%;">
+                            <img src="{{patient_signature}}" id="signImg" style="height:60px; max-width:100%;" />
+                            <p style="font-size: 12px;color:grey">Customer Signature</p>
+                        </div>
+                    {{/if}}
+
+                </div>
+                <div>
+                    <p style="font-size:12px;font-weight:400;color:grey">{{#if is_practice_details}}
+                        {{practice_name}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;
+                        {{practice_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{practice_email}} {{else}}
+                        {{doctor_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{doctor_email}} {{/if}}
+                    </p>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <div></div>
+                <p style="width:fit-content;color:grey">Page 2 of {{total_pages}}</p>
+            </div>
+        </div>
+        {{/if}}
+        {{#if is_payment_pages}} {{#each paymentPages}}
+        <div class="A4"
+            style="page-break-before:always;height:1200px;width:850px;display:table;position:relative">
+            <div class="top_blue_strip" style="width:100%;height:10px;background-color:#0a5094"></div>
+            <div class="headerLogo" style="display:flex;margin:40px 40px 0 40px">
+                <div style="width:20%"><img src="{{doctor_image}}" style="max-width:100%;max-height:60px"></div>
+                <div style="width:52%;font-size:27px;font-weight:700;text-align:center">
+                    <p>Payment Plan Contract</p><img src="images/PNG/powered_by_deneftis.svg" style="width:31%">
+                </div>
+                <div style="margin-top:20px">
+                    <p>Contract Code :<b>{{contract_code}}</b></p>
+                    <p>Contract Status:<b>{{payment_status}}</b></p>
+                </div>
+            </div>
+            <div class="content" style="height:1045px">
+                <h4 style="font-size:23px;font-weight:700;margin-top:20px;text-align:left">Payment Details</h4>
+                <div
+                    style="width:100%;margin-top:20px;border-radius:4px;background-color:#fff;padding:0;border:1px solid #000">
+                    <table style="border-collapse:collapse;width:100%">
+                        <thead>
+                            <tr style="font-size:12px;color:#fff;background:#0a5094">{{#if from_business}}<th
+                                    style="padding:18px;text-align:left;font-size:14px;font-weight:normalborder-right: 1px solid #d7d7d7">
+                                    Recurring Date</th>{{/if}}
+                                <th
+                                    style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">
+                                    Transaction Date</th>
+                                <th
+                                    style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">
+                                    Payment Status</th>
+                                <th
+                                    style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">
+                                    Payment Type</th>
+                                <th style="padding:18px;text-align:left;font-size:14px;font-weight:400">Transaction
+                                    Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>{{#each payments}}<tr style="font-size:18px;color:#000;border-top:1px solid #d7d7d7">
+                                {{#if from_business}}<th
+                                    style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">
+                                    {{payment_date}}</th>{{/if}}
+                                <th
+                                    style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">
+                                    {{date_added}}</th>
+                                <th
+                                    style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">
+                                    {{payment_status}}</th>
+                                <th
+                                    style="padding:18px;text-align:left;text-transform:capitalize;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">
+                                    {{pt_name}}</th>
+                                <th
+                                    style="padding:18px;text-align:left;text-transform:capitalize;font-size:14px;font-weight:400">
+                                    {{amount_deducted}}</th>
+                            </tr>{{/each}}</tbody>
+                    </table>
+                </div>{{#if is_only_one_payment_pages}}<div style="margin-top:5px;font-size:16px"><b>Note: All the
+                        payments will be displayed as {{statement_descriptor}} on your Bank/Card statement.</b></div>
+                {{/if}}
+
+            </div>
+            <div style="width:100%;position:absolute;bottom:30px;left:0;padding:12px 81px">
+                <div style="width:100%;display:flex;justify-content:space-between">
+                    <div
+                        style="width:max-content;width:max-content;display:flex;flex-direction:column;justify-content:center">
+                        {{#if from_split}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey">Contract made Remotely on</span><b>{{date_added}} at
+                                {{contract_time}}</b>{{#if show_ip}}<br><label
+                                style="font-size:12px;font-weight:400"><span
+                                    style="color:grey">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{else}}<label style="font-size:12px;font-weight:400"><span style="color:grey">Contract
+                                made in Office
+                                on</span><b>{{date_added}} at {{contract_time}}</b>{{#if show_ip}}<br><label
+                                style="font-size:12px;font-weight:400"><span
+                                    style="color:grey">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{/if}}
+
+                    </div>
+                    {{#if patient_signature}}
+                        <div style="text-align:right;max-width:35%;">
+                            <img src="{{patient_signature}}" id="signImg" style="height:60px; max-width:100%;" />
+                            <p style="font-size: 12px;color:grey">Customer Signature</p>
+                        </div>
+                    {{/if}}
+                </div>
+                <div>
+                    <p style="font-size:12px;font-weight:400;color:grey">{{#if is_practice_details}}
+                        {{practice_name}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;
+                        {{practice_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{practice_email}} {{else}}
+                        {{doctor_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{doctor_email}} {{/if}}
+                    </p>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <div></div>
+                <p style="width:fit-content;color:grey">Page {{current_page}} of {{total_pages}}</p>
+            </div>
+        </div>
+        {{/each}} 
+        {{/if}}
+        {{!-- {{#if not_download_by_admin}} --}}
+        <div class="A4"
+            style="page-break-before:always;height:1200px;width:850px;display:table;position:relative">
+            <div class="top_blue_strip" style="width:100%;height:10px;background-color:#0a5094"></div>
+            <div class="content" style="margin:0 40px">
+                <h4 style="font-size:23px;font-weight:700;margin-top:50px;text-align:left">Need help with</h4>
+                <ul class="helpPage">
+                    <li>Change/modify your payment date</li>{{!--<li>Edit/cancel your contract</li>--}}<li>Pay next
+                        recurring payment</li>
+                    <li>Add or change your payment source</li>
+                    <li>Payoff the amount of your running contract</li>
+                    <li>Partial payment</li>
+                    <li>Report a problem ?<br><span
+                            style="font-size:14px;color:grey;border-bottom:none;font-weight:400">Email at<span
+                                style="color:#0a5094;border-bottom:none">support@denefits.com</span>or report a problem
+                            via Denefits App</span></li>
+                </ul>
+                <h4 style="font-size:21px;font-weight:700;margin-top:20px;text-align:left;color:#0a5094"><b>Denefits
+                        Customer App</b>is the<b>One-Stop Solution</b>for all your payment plan-related issues.</h4>
+                <p style="margin-top:21px;font-size:18px">Scan to download the app and let Denefits resolve all your
+                    queries in just a few clicks.</p>
+                <div style="display:flex;flex-direction:column;align-items:center;margin-top:60px">{{!-- {{#if
+                    download_by_doctor}} --}} {{!-- <img src="/images/PNG/QR_doctor_app.svg" style="width:166px"> --}}
+                    {{!-- {{else}} --}} <img src="images/PNG/QR_denefits_App.svg" style="width:166px"> {{!-- {{/if}}
+
+                    --}}<h4
+                        style="font-size:26px;font-weight:700;margin:20px 0 27px 0;text-align:left;width:max-content">
+                        Scan to Download App</h4>
+                    <div style="display:flex;justify-content:space-between;width:310px">{{!-- {{#if
+                        download_by_doctor}}<a
+                            href="https://play.google.com/store/apps/details?id=bhct.denefits.doctor">
+                            <div
+                                style="width:147px;font-size:10px;color:#fff;height:47px;background:#1e4468;border-radius:4px;padding:7px 6px">
+                                <img src="/images/PNG/playstore.png" style="width:24px;margin:3px 11px;float:left">
+                                <p style="text-decoration:underline;text-decoration-color:#1e4468">GET IN ON<br><span
+                                        style="border-bottom:none;font-size:15px">Google play</span></p>
+                            </div>
+                        </a><a href="https://apps.apple.com/us/app/denefits/id1253338581">
+                            <div
+                                style="width:147px;font-size:10px;color:#fff;height:47px;background:#1e4468;border-radius:4px;padding:7px 6px">
+                                <img src="/images/PNG/apple_app_store.png"
+                                    style="width:22px;margin:3px 11px;float:left">
+                                <p style="text-decoration:underline;text-decoration-color:#1e4468">Download on
+                                    the<br><span style="border-bottom:none;font-size:15px">App Store</span></p>
+                            </div>
+                        </a>{{else}} --}}<a href="https://play.google.com/store/apps/details?id=bhct.denefits.patient">
+                            <div
+                                style="width:147px;font-size:10px;color:#fff;height:47px;background:#1e4468;border-radius:4px;padding:7px 6px">
+                                <img src="images/PNG/playstore.png" style="width:24px;margin:3px 11px;float:left">
+                                <p style="text-decoration:underline;text-decoration-color:#1e4468">GET IN ON<br><span
+                                        style="border-bottom:none;font-size:15px">Google play</span></p>
+                            </div>
+                        </a><a href="https://apps.apple.com/us/app/denefits-patient/id1386620496?ls=1">
+                            <div
+                                style="width:147px;font-size:10px;color:#fff;height:47px;background:#1e4468;border-radius:4px;padding:7px 6px">
+                                <img src="images/PNG/apple_app_store.png"
+                                    style="width:22px;margin:3px 11px;float:left">
+                                <p style="text-decoration:underline;text-decoration-color:#1e4468">Download on
+                                    the<br><span style="border-bottom:none;font-size:15px">App Store</span></p>
+                            </div>
+                        </a>{{!-- {{/if}}
+                        --}}</div><a href="https://www.denefits.com/" style="text-decoration:none">
+                        <p style="font-size:19px;color:#0a5094;margin-top:11px;width:fit-content">www.denefits.com</p>
+                    </a>
+                </div>
+            </div>
+            <div style="width:100%;position:absolute;bottom:30px;left:0;padding:12px 5rem">
+                <div style="width:100%;display:flex;justify-content:space-between">
+                    <div
+                        style="width:max-content;width:max-content;display:flex;flex-direction:column;justify-content:center">
+                        {{#if from_split}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">Contract made Remotely on</span><b>{{date_added}}
+                                at {{contract_time}}</b>{{#if show_ip}}<br><label
+                                style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{else}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">Contract
+                                made in Office on</span><b>{{date_added}} at {{contract_time}}</b>{{#if
+                            show_ip}}<br><label style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{/if}}
+
+                    </div>
+                     {{#if patient_signature}}
+                        <div style="text-align:right;max-width:35%;">
+                            <img src="{{patient_signature}}" id="signImg" style="height:60px; max-width:100%;" />
+                            <p style="font-size: 12px;color:grey">Customer Signature</p>
+                        </div>
+                    {{/if}}
+                </div>
+                <div>
+                    <p style="font-size:12px;font-weight:400;color:grey">{{#if is_practice_details}}
+                        {{practice_name}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;
+                        {{practice_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{practice_email}} {{else}}
+                        {{doctor_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{doctor_email}} {{/if}}
+                    </p>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <img src="images/PNG/powered_by_deneftis.svg" style="width:145px">
+                <p style="width:fit-content;color:grey">Page {{next_page.[0]}} of {{total_pages}}</p>
+            </div>
+        </div>
+        {{!-- {{/if}} --}}
+    </div>
     {{/if}}
-  </body>
+    {{#if is_show_closure_form}}
+    <div class="main-container" id="A4"
+        style="background:#fff;max-width:970px;font-family:Poppins,sans-serif;font-size:14px">
+        <div class="A4" style="page-break-before:always;height:1200px;width:850px;margin:auto">
+            <div class="content">
+                <div class="outer-wrapper">
+                    <p class="watermark">{{practice_name}}</p>
+                    <div class="inner-wrapper">
+                        <div class="row-full text-center">
+                            <h1>TILA DISCLOSURE STATEMENT<p class="py-3" style="font-size:16px!important">INSTALLMENT
+                                    PAYMENT PLAN CONTRACT</p>
+                            </h1>
+                        </div>
+                        <div class="row-full d-flex row-top" style="border-bottom:1px solid #000">
+                            <div class="row-half" style="border-right:1px solid #000">
+                                <div class="col" style="border-bottom:1px solid #000"><label>Date of
+                                        Agreement:</label><span>{{date_added}}</span></div>
+                                <div class="col"><label>Business:</label><span>{{issuer_name}}</span></div>
+                                <div class="col"><label>Street Address:</label><span>{{issuer_address}}</span></div>
+                                <div class="col"><label>City, State:</label><span>{{issuer_city_address}}</span></div>
+                                <div class="col"><label>Contact Email:</label><span
+                                        style="word-break:break-all">{{issuer_email}}</span></div>
+                            </div>
+                            <div class="row-half">
+                                <div class="col" style="border-bottom:1px solid #000"><label>Contract
+                                        Number:</label><span>{{contract_code}}</span></div>
+                                <div class="col"><label>Name of customer:</label><span
+                                        style="text-transform:capitalize">{{customer_name}}</span></div>
+                                <div class="col"><label>Street Address:</label><span>{{patient_only_address}}</span>
+                                </div>
+                                <div class="col"><label>City, State:</label><span>{{city}} {{state_name}} {{zip}}</span>
+                                </div>
+                                <div class="col"><label>Telephone
+                                        Number:</label><span>{{patient_mobile_formatted}}</span></div>
+                                <div class="col" style="margin-bottom:5px">
+                                    <label>Email:</label><span>{{patient_email}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-full d-flex row-top" style="border-bottom:1px solid #000">
+                            <div class="row-half">
+                                <div class="col"><label>Servicer:</label><span>Denefits LLC</span></div>
+                                {{!-- <div class="col"><label>Street Address:</label><span>16500 Bake Pkwy</span></div> --}}
+                                <div class="col"><label>City, State:</label><span>Irvine, CA 92618</span></div>
+                                <div class="col"><label>Contact Email:</label><span
+                                        style="word-break:break-all">support@denefits.com</span></div>
+                            </div>
+                        </div>
+                        <div class="row-full row-cal" style="padding:15px">
+                            {{#if is_deferred_contract}}
+                             <div class="col-one-fifth" style="border:1px solid #000;padding:10px;border-right:0">
+                                <label>Interest Rate (During Deferred)</label>
+                                <p></p>{{!--<p>The cost of your credit as a yearly rate.</p>--}}<div
+                                    style="width:90%;float:left;font-weight:600;font-size:19px">
+                                    No Interest
+                                </div>
+                            </div>
+
+                             <div class="col-one-fifth" style="border:1px solid #000;padding:10px;border-right:0">
+                                <label>Interest Rate (After Deferred)</label> {{#if if_applicable}} <p>(If Applicable) / Payment Missed / Contract Edited:</p>{{/if}}
+                                <p></p>{{!--<p>The cost of your credit as a yearly rate.</p>--}}<div
+                                    style="width:90%;float:left;font-weight:600;font-size:19px">{{interest_rate}} 
+                                    {{#if is_deferred_contract_1}}
+                                    {{else}}
+                                        {{#if is_compounded_interest}}
+                                            <sup>C</sup>{{else}}<sup>F</sup>
+                                        {{/if}}
+                                    {{/if}}
+                                </div>
+                            </div>
+                            {{else}}
+                             <div class="col-one-fifth" style="border:1px solid #000;padding:10px;border-right:0">
+                                <label>Annual Percentage Rate</label>
+                                <p></p>{{!--<p>The cost of your credit as a yearly rate.</p>--}}<div
+                                    style="width:90%;float:left;font-weight:600;font-size:19px">{{interest_rate}} 
+                                    {{#if is_deferred_contract_1}}
+                                    {{else}}
+                                        {{#if is_compounded_interest}}
+                                            <sup>C</sup>{{else}}<sup>F</sup>
+                                        {{/if}}
+                                    {{/if}}
+                                </div>
+                            </div>
+                            {{/if}}
+                           
+                            <div class="col-one-fifth" style="border:1px solid #000;padding:10px;border-right:0">
+                                <label>Finance Charge</label>{{!--<p>The dollar amount the credit will cost you.</p>--}}
+                                <p></p>
+                                <div style="width:95%;float:right;font-weight:600;padding-left:5px;font-size:19px">
+                                    {{interest_charged}}</div>
+                            </div>
+                            <div class="col-one-fifth" style="border:1px solid #000;padding:10px;border-right:0">
+                                <label>Amount Financed</label>{{!--<p>The amount of credit provided to you or on your
+                                    behalf.</p>--}}<p></p>
+                                <div style="width:95%;float:right;font-weight:600;padding-left:5px;font-size:19px">
+                                    {{financed_amount}}</div>
+                            </div>
+                            <div class="col-one-fifth" style="border:1px solid #000;padding:10px;border-right:0">
+                                <label>Total of Payments</label>
+                                <p>The amount you will have paid after making all scheduled payments.</p>
+                                <div style="width:95%;float:right;font-weight:600;padding-left:5px;font-size:19px">
+                                    {{total_payable_amount}}</div>
+                            </div>
+                            {{#if is_deferred_contract}}
+                            {{else}}
+                            <div class="col-one-fifth" style="border:1px solid #000;padding:10px"><label>{{#if
+                                    is_arv2_partial_payment}}Partial Payment{{else}}Down Payment{{/if}}
+                                </label>
+                                <p>The Amount you will pay at contract creation.</p>
+                                <div style="width:95%;float:right;font-weight:600;padding-left:5px;font-size:19px">
+                                    {{downpayment_amount}}</div>
+                            </div>
+                            {{/if}}
+                            
+                        </div>
+                        <div class="row-full d-flex row-pay align-center" style="padding:15px;padding-top:0">
+                            <div class="col-one-fourth">
+                                <p style="margin:0;width:100%;line-height:16px;font-size:14px;font-weight:600">Your
+                                    payment schedule will be:</p>
+                            </div>
+                            <div class="col-one-fourth"><label>Number of Payments</label>
+                                <div class="cont">{{number_of_payments}}</div>
+                            </div>{{#if is_deferred_contract}}<div class="col-one-fourth"><label>Monthly Payment (During
+                                    Deferred)</label>
+                                <div class="cont">{{recurring_amount_with_transaction}}</div>
+                            </div>
+                            <div class="col-one-fourth"><label>Monthly Payment (After Deferred)</label>
+                                <div class="cont">{{next_recurring_amount_with_transaction}}</div>
+                            </div>
+                             <span>{{else}}</span>
+                            <div class="col-one-fourth">
+                                {{#if is_pay_using_credee}}
+                                <label style="border-right:1px solid #000;">Weekly Payment</label>
+                                <div class="cont" style="border-right:1px solid #000;">{{recurring_amount_with_transaction}}</div>
+                                {{else}}
+                                 <label>Monthly Payment</label>
+                                <div class="cont">{{recurring_amount_with_transaction}}</div>
+                                {{/if}}
+                            </div>
+                           <span>{{/if}}</span> 
+                            {{#if is_pay_using_credee}}
+                           <span></span>
+                            {{else}}
+                            <div class="col-one-fourth"><label style="border-right:1px solid #000">When
+                                    Payments Are Due</label>
+                                <div class="cont" style="border-right:1px solid #000">{{recurring_date}} {{#if
+                                    recurring_date }} of each month{{/if}}
+                                </div>
+                            </div>
+                             {{/if}}
+                        </div>
+                        <div class="row-full row-cont">
+                            <div class="cont-wrap"><label>Late Charge:</label><span>If a payment is one or more days
+                                    past due, a fee of ${{late_fee}} will be imposed for each late payment.</span></div>
+                            <div class="cont-wrap"><label>Prepayment:</label><span>If you pay off the balance of your
+                                    contract early, you will not be subject to a prepayment penalty. You will only be
+                                    charged interest that has accrued up to the date of the prepayment.</span></div>
+                            <div class="cont-wrap"><label style="min-width:10px!important">F:</label><span>Fixed
+                                    Interest</span><label style="min-width:10px!important">C:</label><span>Compound
+                                    Interest</span></div>{{!--<div class="cont-wrap"><label>Security:</label><span>You
+                                    are giving a security interest in</span><span class="text">{{fixed_flat_fee}}</span>
+                            </div>--}} {{!--<small>See your contract documents for any additional information about
+                                nonpayment, default, any required repayment in full before the scheduled date, and
+                                prepayment refunds and penalties.</small>--}}
+                        </div>
+                        <div class="row-full d-flex row-cont-second">
+                            <div class="row-half">
+                                <div class="cont-wrap"><label style="font-size:18px;font-weight:600">Your contract at a
+                                        glance:</label></div>
+                                <div class="cont-wrap"><label></label><span class="text"
+                                        style="border-bottom:1px solid #000">{{treatment_amount}}</span><span
+                                        style="margin-left:15px">Service Amount</span></div>
+                                <div class="cont-wrap"><label></label><span class="text"
+                                        style="border-bottom:1px solid #000">{{downpayment_amount}}</span><span
+                                        style="margin-left:15px">{{#if is_arv2_partial_payment}}Partial Payment
+                                        Amount{{else}}Down Payment Amount{{/if}}
+                                    </span></div>
+                                <div class="cont-wrap"><label></label><span class="text"
+                                        style="border-bottom:1px solid #000">{{financed_amount}}</span><span
+                                        style="margin-left:15px">Principal Amount</span></div>
+                                <div class="cont-wrap"><label></label><span class="text"
+                                        style="border-bottom:1px solid #000">{{interest_charged_deferred}}</span><span
+                                        style="margin-left:15px">Total Interest</span></div>
+                                <div class="cont-wrap"><label></label><span class="text"
+                                        style="border-bottom:1px solid #000">{{advance_interest_amount}}</span><span
+                                        style="margin-left:15px">Upfront Payment</span></div>
+                                <div class="cont-wrap"><label></label><span class="text"
+                                        style="border-bottom:1px solid #000">{{transaction_fee_payment}}</span><span
+                                        style="margin-left:15px">Fee Per Transaction</span></div>
+                                <div class="cont-wrap"><label></label><span class="text"
+                                        style="border-bottom:1px solid #000">{{enrollmentFee}}</span><span
+                                        style="margin-left:15px">Enrollment Fee</span></div>{{!--<div class="cont-wrap">
+                                    <label></label><span class="text">{{financed_amount}}</span><span>Amount
+                                        Financed</span>
+                                </div>--}}
+                            </div>
+                            <div class="row-half text-center">
+                                <h3 class="head">THIS IS AN INSTALLMENT PAYMENT PLAN CONTRACT. THIS IS NOT A LOAN.
+                                    &nbsp; &nbsp;<br><br>IT IS YOUR RESPONSIBILITY TO REVIEW THE TERMS AND CONDITIONS OF
+                                    THIS CONTRACT BEFORE SIGNING. YOU ARE ENTITLED TO A COPY OF THE SIGNED CONTRACT.
+                                </h3>
+                            </div>
+                        </div>
+                        <div>{{#if is_service_record_small}}<h4 style="padding-top:10px">Service Cost Breakdown</h4>
+                            <h4 class="row-half">Service</h4>
+                            <h4 class="row-half">Price</h4>{{#each serviceRecord}}<div class="row-half">
+                                <div class="block" style="height:50px;word-break:break-all"><span>{{service}}</span>
+                                </div>
+                            </div>
+                            <div class="row-half">
+                                <div class="block" style="height:50px;word-break:break-all"><span>{{price}}</span></div>
+                            </div>{{/each}} {{/if}}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="width:100%;position:absolute;bottom:30px;left:0;padding:12px 5rem">
+                <div style="width:100%;display:flex;justify-content:space-between">
+                    <div
+                        style="width:max-content;width:max-content;display:flex;flex-direction:column;justify-content:center">
+                        {{#if from_split}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">Contract made Remotely on</span><b>{{date_added}}
+                                at {{contract_time}}</b>{{#if show_ip}}<br><label
+                                style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{else}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">Contract
+                                made in Office on</span><b>{{date_added}} at {{contract_time}}</b>{{#if
+                            show_ip}}<br><label style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{/if}}
+
+                    </div>
+                    {{#if patient_signature}}
+                        <div style="text-align:right;max-width:35%;">
+                            <img src="{{patient_signature}}" id="signImg" style="height:60px; max-width:100%;" />
+                            <p style="font-size: 12px;color:grey">Customer Signature</p>
+                        </div>
+                    {{/if}}
+                </div>
+                <div>
+                    <p style="font-size:12px;font-weight:400;color:grey">{{#if is_practice_details}}
+                        {{practice_name}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;
+                        {{practice_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{practice_email}} {{else}}
+                        {{doctor_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{doctor_email}} {{/if}}
+                    </p>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <img src="images/PNG/powered_by_deneftis.svg" style="width:145px">
+                <p style="width:fit-content;color:grey">Page {{next_page.[1]}} of {{total_pages}}</p>
+            </div>
+        </div>
+        {{#if is_service_record_large}}
+        <div class="A4"
+            style="page-break-before:always;height:1200px;width:850px;margin:auto">
+            <div class="content">
+                <div class="outer-wrapper">
+                    <p class="watermark">{{practice_name}}</p>
+                    <div class="inner-wrapper">
+                        <div>
+                            <h4 style="padding-top:10px">Service Cost Breakdown</h4>
+                            <h4 class="row-half">Service</h4>
+                            <h4 class="row-half">Price</h4>{{#each serviceRecord}}<div class="row-half">
+                                <div class="block" style="height:30px;word-break:break-all"><span>{{service}}</span>
+                                </div>
+                            </div>
+                            <div class="row-half">
+                                <div class="block" style="height:30px;word-break:break-all"><span>{{price}}</span></div>
+                            </div>{{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="width:100%;position:absolute;bottom:30px;left:0;padding:12px 5rem">
+                <div style="width:100%;display:flex;justify-content:space-between">
+                    <div
+                        style="width:max-content;width:max-content;display:flex;flex-direction:column;justify-content:center">
+                        {{#if from_split}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">Contract made Remotely on</span><b>{{date_added}}
+                                at {{contract_time}}</b>{{#if show_ip}}<br><label
+                                style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{else}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">Contract
+                                made in Office on</span><b>{{date_added}} at {{contract_time}}</b>{{#if
+                            show_ip}}<br><label style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{/if}}
+
+                    </div>
+                     {{#if patient_signature}}
+                        <div style="text-align:right;max-width:35%;">
+                            <img src="{{patient_signature}}" id="signImg" style="height:60px; max-width:100%;" />
+                            <p style="font-size: 12px;color:grey">Customer Signature</p>
+                        </div>
+                    {{/if}}
+                </div>
+                <div>
+                    <p style="font-size:12px;font-weight:400;color:grey">{{#if is_practice_details}}
+                        {{practice_name}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;
+                        {{practice_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{practice_email}} {{else}}
+                        {{doctor_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{doctor_email}} {{/if}}
+                    </p>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <img src="images/PNG/powered_by_deneftis.svg" style="width:145px">
+                <p style="width:fit-content;color:grey">Page {{next_page.[2]}} of {{total_pages}}</p>
+            </div>
+        </div>
+        {{/if}}
+        <div class="A4" style="page-break-before:always;height:1200px;width:850px;margin:auto">
+            <div class="content">
+                <div class="outer-wrapper">
+                    <p class="watermark">{{practice_name}}</p>
+                    <div class="inner-wrapper">
+                        <div class="row-full row-content">
+                            <h4 class="head">CREDIT CHECK</h4>
+                            <p class="desc">Denefits will not conduct a credit check as a part of this agreement.
+                                However, your service provider may check your credit before allowing you to apply for an
+                                Account.</p>
+                            <h4 class="head">CREDIT REPORTING</h4>
+                            <p class="desc">Your payment activities may be reported to the credit bureaus. If your
+                                payment is 30 days past due, it may be reported as delinquent to the credit bureaus. The
+                                Business shall appear as the Original Creditor on your credit report.</p>
+                            <h4 class="head">PAYMENTS AND FEES</h4>
+                            <p class="desc"><strong>Upfront Payment:</strong>An Upfront Payment shall be required to
+                                create the contract, as specified on Page 1 of TILA Disclosure. In the event that the
+                                contract service amount is increased, the upfront payment may be adjusted accordingly.
+                                The upfront payment is non-refundable after three (3) business days from the date of the
+                                contract.</p>
+                            <p class="desc"><strong>Enrollment Fee:</strong>Upon the creation of the contract, you shall
+                                be charged a one-time non-refundable Enrollment Fee as specified on Page 1 of TILA
+                                Disclosure.</p>
+                            <p class="desc"><strong>Transaction Fee:</strong>The customer shall be charged a transaction
+                                fee on each payment, as specified on Page 1 of TILA Disclosure.</p>
+                            <p class="desc"><strong>Payment Due Date Change Fee:</strong>You may change your monthly due
+                                date to a later date if your account is current and your first payment has been made.
+                                All Terms and Conditions of your contract remain in effect until your account has been
+                                paid in full. For your protection, we may confirm your identity as part of the due date
+                                change process. Payment Due Date Change may be done for a maximum of 15 days and up to 5
+                                times during the contract lifespan, subject to the terms provided in the Customer’s
+                                service agreement with the Business. You shall be responsible for paying this fee, as
+                                specified in Schedule A. There is no fee for changing the due date to an earlier date.
+                            </p>
+                            <h4 class="head">PAYMENT STRUCTURE</h4>
+                            <p class="desc"><strong>Interest Rate:</strong>Customers expressly agree to the interest
+                                rate as specified on Page 1 of TILA Disclosure.</p>
+                            <p class="desc"><strong>Statement Descriptor:</strong>All payments shall appear
+                                as<b>{{statement_descriptor}}</b>on the customer's Bank/Card statement.</p>
+                            <div class="row-full row-content">
+                                <h3 class="table-heading-lg">RATES, FEES AND PAYMENT INFORMATION</h3>
+                                <div class="table-heading-sm">How Interest Is Calculated</div>
+                                <table class="cont-table">
+                                    <tr>
+                                        <td style="width:15%" valign="top">Your Interest Rate</td>
+                                        <td style="width:85%" valign="top">Your interest rate is calculated according to
+                                            the amount financed and the duration of the contract.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:15%" valign="top">When We Charge Interest</td>
+                                        <td style="width:85%" valign="top">We charge interest from the date you sign up
+                                            for the payment plan.</td>
+                                    </tr>{{!--<tr>
+                                        <td style="width:15%" valign="top">How We Calculate Interest</td>
+                                        <td style="width:85%" valign="top">We calculate the interest charge on your
+                                            contract at the time of creation. We do this by applying compound interest
+                                            on the finance amount. Whatever interest is calculated of the contract term
+                                            it is equally distributed over recurring payment every month. So principal
+                                            and interest paid remains the same every month. A portion of the interest is
+                                            taken by Denefits as an upfront payment. If the term of contract is less
+                                            than 13 months then fixed interest is applicable. If the term of contract is
+                                            more than or equal to 13 months, compound interest is applicable. Note:
+                                            Fixed interest is calculated on the finance amount only. In case social or
+                                            partial payment is received, it goes to the recurring amount. We divide the
+                                            payment made by remaining terms or remaining payments and hence reducing the
+                                            recurring amount.</td>
+                                    </tr>--}}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="width:100%;position:absolute;bottom:30px;left:0;padding:12px 5rem">
+                <div style="width:100%;display:flex;justify-content:space-between">
+                    <div
+                        style="width:max-content;width:max-content;display:flex;flex-direction:column;justify-content:center">
+                        {{#if from_split}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">Contract made Remotely on</span><b>{{date_added}}
+                                at {{contract_time}}</b>{{#if show_ip}}<br><label
+                                style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{else}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">Contract
+                                made in Office on</span><b>{{date_added}} at {{contract_time}}</b>{{#if
+                            show_ip}}<br><label style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{/if}}
+
+                    </div>
+                     {{#if patient_signature}}
+                        <div style="text-align:right;max-width:35%;">
+                            <img src="{{patient_signature}}" id="signImg" style="height:60px; max-width:100%;" />
+                            <p style="font-size: 12px;color:grey">Customer Signature</p>
+                        </div>
+                    {{/if}}
+                </div>
+                <div>
+                    <p style="font-size:12px;font-weight:400;color:grey">{{#if is_practice_details}}
+                        {{practice_name}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;
+                        {{practice_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{practice_email}} {{else}}
+                        {{doctor_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{doctor_email}} {{/if}}
+                    </p>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <img src="images/PNG/powered_by_deneftis.svg" style="width:145px">
+                <p style="width:fit-content;color:grey">Page {{next_page.[3]}} of {{total_pages}}</p>
+            </div>
+        </div>
+        <div class="A4" style="page-break-before:always;height:1200px;width:850px;margin:auto">
+            <div class="content">
+                <div class="outer-wrapper">
+                    <p class="watermark">{{practice_name}}</p>
+                    <div class="inner-wrapper">
+                        <div class="row-full row-content">{{!--<h3 class="table-heading-lg">RATES, FEES AND PAYMENT
+                                INFORMATION</h3>
+                            <div class="table-heading-sm">How Interest Is Calculated</div>--}}<table class="cont-table"
+                                style="margin-top:30px">{{!--<tr>
+                                    <td style="width:15%" valign="top">Your Interest Rate</td>
+                                    <td style="width:85%" valign="top">Your interest rate is calculated according to the
+                                        amount financed and the duration of the contract.</td>
+                                </tr>
+                                <tr>
+                                    <td style="width:15%" valign="top">When We Charge Interest</td>
+                                    <td style="width:85%" valign="top">We charge interest from the date you sign up for
+                                        the payment plan.</td>
+                                </tr>--}}<tr>
+                                    <td style="width:15%" valign="top">How We Calculate Interest
+                                    <td style="width:85%" valign="top">We calculate the interest charge on your contract
+                                        at the time of creation. We do this by applying compound interest on the finance
+                                        amount. Whatever interest is calculated of the contract term it is equally
+                                        distributed over recurring payment every month. So principal and interest paid
+                                        remains the same every month.
+                                        {{#if is_deferred_contract_1}} {{else}} 
+                                        A portion of the interest is taken by Denefits as an upfront payment. 
+                                        {{/ if}}
+                                        If the term of contract is less than 13 months then fixed
+                                        interest is applicable. If the term of contract is more than or equal to 13
+                                        months, compound interest is applicable. Note: Fixed interest is calculated on
+                                        the finance amount only. In case social or partial payment is received, it goes
+                                        to the recurring amount. We divide the payment made by remaining terms or
+                                        remaining payments and hence reducing the recurring amount.</td>
+                                </tr>
+                            </table>
+                            <h4 class="head text-center">CONSENT TO ELECTRONIC COMMUNICATIONS</h4>
+                            <p class="desc">By applying for an Account, you hereby consent to receive electronic
+                                communications, including e-mail, text messages, and push notifications, about your
+                                Account. Your successful consent through the online or mobile app demonstrates that you
+                                are able to access the information posted on such online or mobile app.</p>
+                            <h4 class="head">Categories of Communications</h4>
+                            <p class="desc">You consent to receive all communications related to your Account in
+                                electronic form, including but not limited to, (i) the initial disclosure statement or
+                                agreement governing your Account, (ii) any disclosure required by federal, state, or
+                                local law, including those under the Truth in Lending Act, Fair Credit Reporting Act,
+                                Equal Credit Opportunity Act, and the financial privacy provisions of the
+                                Gramm-Leach-Bliley Act, (iii) billing statements, if you have signed up for electronic
+                                statements, letters, notices or alerts regarding your Account and any changes to your
+                                Account, (iv) other disclosures, notices or communications in connection with the
+                                application for, opening of, maintenance of or collection of your Account. These
+                                electronic communications may include your name and some information about your Account,
+                                including your balance or the due date; however, we will never include your social
+                                security number. Electronic communications may be reviewed by any party with access to
+                                your Account, the e-mail address you have provided to us for delivering these
+                                communications, or the hardware or software you use to view your Account information or
+                                your e-mail address.</p>
+                            <h4 class="head">How to Withdraw Your Consent</h4>
+                            <p class="desc">You may not apply online for an Account or register your Account for online
+                                services unless you provide consent to receive electronic communications. If you have
+                                registered for online services and wish to withdraw your consent to receive future
+                                electronic communications, you must unenroll from each service you have elected to
+                                receive to completely withdraw your consent.</p>
+                            <p class="desc">We will not impose any fee to process the withdrawal of your consent to
+                                electronic communications. However, you will not be able to receive your billing
+                                statements electronically if you do not consent to receive electronic communications or
+                                withdraw your consent. Any withdrawal of your consent to electronic communications will
+                                be effective only after we have a reasonable period of time to process your withdrawal
+                                request.</p>
+                            <h4 class="head">How to Update Your Records</h4>
+                            <p class="desc">You agree to promptly update your e-mail address, telephone number and
+                                address if a change occurs by updating your information through the website listed on
+                                your billing statement or by calling customer service.</p>
+                            <h4 class="head">Communications in Writing</h4>
+                            <p class="desc">All communications in either electronic or paper format from us to you shall
+                                be considered “in writing.” It is your responsibility to print or download a copy of
+                                this consent, the Account agreement, the debt cancellation agreement (if elected), and
+                                any other electronic communication that is important to you for your records.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="width:100%;position:absolute;bottom:30px;left:0;padding:12px 5rem">
+                <div style="width:100%;display:flex;justify-content:space-between">
+                    <div
+                        style="width:max-content;width:max-content;display:flex;flex-direction:column;justify-content:center">
+                        {{#if from_split}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">Contract made Remotely on</span><b>{{date_added}}
+                                at {{contract_time}}</b>{{#if show_ip}}<br><label
+                                style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{else}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">Contract
+                                made in Office on</span><b>{{date_added}} at {{contract_time}}</b>{{#if
+                            show_ip}}<br><label style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{/if}}
+
+                    </div>
+                     {{#if patient_signature}}
+                        <div style="text-align:right;max-width:35%;">
+                            <img src="{{patient_signature}}" id="signImg" style="height:60px; max-width:100%;" />
+                            <p style="font-size: 12px;color:grey">Customer Signature</p>
+                        </div>
+                    {{/if}}
+                </div>
+                <div>
+                    <p style="font-size:12px;font-weight:400;color:grey">{{#if is_practice_details}}
+                        {{practice_name}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;
+                        {{practice_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{practice_email}} {{else}}
+                        {{doctor_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{doctor_email}} {{/if}}
+                    </p>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <img src="images/PNG/powered_by_deneftis.svg" style="width:145px">
+                <p style="width:fit-content;color:grey">Page {{next_page.[4]}} of {{total_pages}}</p>
+            </div>
+        </div>
+        <div class="A4" style="page-break-before:always;height:1200px;width:850px;margin:auto">
+            <div class="content">
+                <div class="outer-wrapper">
+                    <p class="watermark">{{practice_name}}</p>
+                    <div class="inner-wrapper">
+                        <div class="row-full row-content">
+                            <h4 class="head">Electronic Signatures</h4>
+                            <p class="desc">You acknowledge that by clicking on the “Submit” or similar button, you are
+                                indicating your intent to sign up for electronic communications and that this shall
+                                constitute your signature.</p>
+                            <h4 class="head">Federal Law</h4>
+                            <p class="desc">You acknowledge and agree that your consent is being provided in connection
+                                with a transaction affecting interstate commerce that is subject to the federal
+                                Electronic Signatures in Global and National Commerce Act, and that you and we both
+                                intend that the Act apply to the fullest extent possible to validate our ability to
+                                conduct business and communicate with you by electronic means.</p>
+                            <p class="desc">By agreeing to this document, you acknowledge that you have read and
+                                understand the terms of this Agreement, and that you intend to be legally bound by them.
+                            </p>
+                            <h4 class="head text-center" style="margin-bottom:5px!important">NOTICE OF YOUR FINANCIAL
+                                PRIVACY RIGHTS</h4>
+                            <p class="desc"><strong>RESTRICTION OF NON-PUBLIC INFORMATION ACCESS</strong></p>
+                            <p class="desc">We hereby inform you that access to your non-public personal information is
+                                restricted to our employees who require such information to provide you with our
+                                products or services. We maintain the physical, electronic, and procedural safeguards as
+                                required by our regulators to ensure the security of your personal information.</p>
+                            <p class="desc"><strong>INFORMATION TO NON-AFFILIATED THIRD PARTIES</strong></p>
+                            <p class="desc">In line with our commitment to maintaining the confidentiality of your
+                                personal information, we hereby affirm that we shall not disclose your non-public
+                                personal information to non-affiliated third parties except where required by law.</p>
+                            <h4 class="head text-center">STANDARD PROVISIONS</h4>{{!--<h4 class="head">ABOUT THE
+                                INSTALLMENT AGREEMENT</h4>--}}<div>
+                                <p class="desc"><strong>Parties:</strong>This Agreement (the "Agreement") is entered
+                                    into between a Business ("Business") and You, a person seeking to obtain services
+                                    from the Business ("Customer" or "You").</p>
+                                <p class="desc"><strong>Business:</strong>The term "Business" is defined as the person,
+                                    entity, or company providing services to the customer who has enrolled in a Monthly
+                                    Payment Plan with Denefits.</p>
+                                <p class="desc"><strong>Installment Payment Plan:</strong>Denefits provides an
+                                    Installment Payment Plan to simplify and make the payment process convenient for
+                                    you. In the event that you are experiencing any financial hardship, the first step
+                                    is to reach out to Denefits to see how we can assist you.</p>
+                                <p class="desc"><strong>Installment Payment Plan Terms:</strong>The payment terms that
+                                    will apply to this contract will be specifically enumerated and agreed to by you in
+                                    the form you fill out when you agree to obtain an Installment Payment Plan from
+                                    Business.</p>
+                            </div>
+                            <h4 class="head">HOW TO USE YOUR ACCOUNT</h4>
+                            <p class="desc"><strong>Usage Of Account:</strong>The account provided to you by Denefits
+                                shall only be used for lawful purposes and in accordance with this Agreement.
+                            <p class="desc"><strong>Payment Obligations:</strong>You shall be responsible for paying all
+                                amounts owed under this Agreement. By using the Services, you promise to pay for all
+                                charges incurred under this Agreement.</p>
+                            <p class="desc"><strong>Account Responsibility:</strong>You shall not permit any other
+                                person to use your account. Any charges resulting from the use of your account by a
+                                third party shall be your sole responsibility to pay.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="width:100%;position:absolute;bottom:30px;left:0;padding:12px 5rem">
+                <div style="width:100%;display:flex;justify-content:space-between">
+                    <div
+                        style="width:max-content;width:max-content;display:flex;flex-direction:column;justify-content:center">
+                        {{#if from_split}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">Contract made Remotely on</span><b>{{date_added}}
+                                at {{contract_time}}</b>{{#if show_ip}}<br><label
+                                style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{else}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">Contract
+                                made in Office on</span><b>{{date_added}} at {{contract_time}}</b>{{#if
+                            show_ip}}<br><label style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{/if}}
+
+                    </div>
+                     {{#if patient_signature}}
+                        <div style="text-align:right;max-width:35%;">
+                            <img src="{{patient_signature}}" id="signImg" style="height:60px; max-width:100%;" />
+                            <p style="font-size: 12px;color:grey">Customer Signature</p>
+                        </div>
+                    {{/if}}
+                </div>
+                <div>
+                    <p style="font-size:12px;font-weight:400;color:grey">{{#if is_practice_details}}
+                        {{practice_name}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;
+                        {{practice_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{practice_email}} {{else}}
+                        {{doctor_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{doctor_email}} {{/if}}
+                    </p>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <img src="images/PNG/powered_by_deneftis.svg" style="width:145px">
+                <p style="width:fit-content;color:grey">Page {{next_page.[5]}} of {{total_pages}}</p>
+            </div>
+        </div>
+        <div class="A4" style="page-break-before:always;height:1200px;width:850px;margin:auto">
+            <div class="content">
+                <div class="outer-wrapper">
+                    <p class="watermark">{{practice_name}}</p>
+                    <div class="inner-wrapper">
+                        <div class="row-full row-content">
+                            <h4 class="head">BILLING INFORMATION</h4>
+                            <p class="desc"><strong>Billing Partners:</strong>When making a payment through our
+                                platform, your payment card information is collected and stored by our payment
+                                processing partner. Our partner collects your payment card information necessary to
+                                process your payment. Such partner’s use and storage of information is governed by its
+                                applicable terms of service and privacy policy. We store only the necessary payment card
+                                information, such as the card type and last four digits.</p>
+                            <p class="desc"><strong>Transaction Fee:</strong>A transaction fee shall be applied to all
+                                Customer payments, as specified in Schedule A.</p>
+                            <p class="desc"><strong>ACH Verification:</strong>Our Auth product shall authenticate your
+                                accounts for ACH, eliminating the need for you to enter account and routing numbers or
+                                deal with micro-deposits. The system authenticates accounts using online banking
+                                credentials, making it possible to begin transferring money immediately. Both consumer
+                                and business bank accounts are supported.</p>
+                            <p class="desc"><strong>ACH Payments:</strong>ACH payments may take up to seven (7) business
+                                days to clear</p>
+                            <p class="desc"><strong>ACH Fees:</strong>It is your responsibility to ensure that the funds
+                                are available at the time of processing. If your payment fails, you shall be responsible
+                                for the late fee. If your ACH fails, Denefits reserves the right to charge the backup
+                                payment method on file with both payment and late fees.</p>
+                            <p class="desc"><strong>Payment Options:</strong>You can make payments by mail, online, or
+                                over the phone. Payments must be made in U.S. dollars using physical (check or money
+                                order) or electronic payment methods, including Apple Pay and Google Pay.</p>
+                            <p class="desc"><strong>Payment Allocation:</strong>We reserve the right to apply the
+                                required total minimum payment to balances on your account using any method we choose.
+                                Any payment made in excess of the required total minimum payment shall be applied to
+                                higher APR balances before lower APR balances. Applicable law may require or permit us
+                                to apply excess payments in a different manner in certain situations, such as when your
+                                account is under a special promotion.</p>
+                            <p class="desc"><strong>Payment Billing:</strong>Denefits is an installment payment plan
+                                servicer that collects payments and manages contracts on behalf of the Business. We
+                                shall attempt to communicate with you regarding your account by phone, text, letter,
+                                and/or email.</p>
+                            <p class="desc"><strong>Disputes:</strong>If a dispute arises between you and either
+                                Business or Denefits, it is your responsibility to call immediately to avoid late fees.
+                                You can request a callback from the Denefits website or send us correspondence about a
+                                disputed amount or payment. Such correspondence may be e-mailed to billing@denefits.com.
+                                Acceptance of a payment marked “Payment In Full” or given with any other conditions or
+                                limitations shall not constitute a waiver of any of our rights under this Agreement.</p>
+                            <h4 class="head">RECOVERY</h4>
+                            <p class="desc"><strong>Overdue Accounts:</strong>In the event you miss a payment or your
+                                account is in an overdue state, Denefits shall have the automatic right to deduct the
+                                outstanding amount from your bank account as soon as funds are available. Denefits
+                                retains the right to sell or assign all overdue Customer account receivables to a third
+                                party at any time.</p>
+                            <p class="desc"><strong>Delinquent Accounts:</strong>Denefits shall exercise its discretion
+                                to continue servicing past-due contracts on behalf of the Business from the customer
+                                accounts that have been sent to the billing department.</p>
+                            <p class="desc"><strong>Attorney’s Fees:</strong>If you fail to make a payment within 60
+                                days of the due date, you shall be responsible for all reasonable attorney’s and court
+                                fees required to collect all outstanding amounts.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="width:100%;position:absolute;bottom:30px;left:0;padding:12px 5rem">
+                <div style="width:100%;display:flex;justify-content:space-between">
+                    <div
+                        style="width:max-content;width:max-content;display:flex;flex-direction:column;justify-content:center">
+                        {{#if from_split}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">Contract made Remotely on</span><b>{{date_added}}
+                                at {{contract_time}}</b>{{#if show_ip}}<br><label
+                                style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{else}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">Contract
+                                made in Office on</span><b>{{date_added}} at {{contract_time}}</b>{{#if
+                            show_ip}}<br><label style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{/if}}
+
+                    </div>
+                     {{#if patient_signature}}
+                        <div style="text-align:right;max-width:35%;">
+                            <img src="{{patient_signature}}" id="signImg" style="height:60px; max-width:100%;" />
+                            <p style="font-size: 12px;color:grey">Customer Signature</p>
+                        </div>
+                    {{/if}}
+                </div>
+                <div>
+                    <p style="font-size:12px;font-weight:400;color:grey">{{#if is_practice_details}}
+                        {{practice_name}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;
+                        {{practice_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{practice_email}} {{else}}
+                        {{doctor_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{doctor_email}} {{/if}}
+                    </p>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <img src="images/PNG/powered_by_deneftis.svg" style="width:145px">
+                <p style="width:fit-content;color:grey">Page {{next_page.[6]}} of {{total_pages}}</p>
+            </div>
+        </div>
+        <div class="A4" style="page-break-before:always;height:1200px;width:850px;margin:auto">
+            <div class="content">
+                <div class="outer-wrapper">
+                    <p class="watermark">{{practice_name}}</p>
+                    <div class="inner-wrapper">
+                        <div class="row-full row-content">
+                            <p class="desc" style="margin-top:20px"><strong>Arbitration:</strong>Any dispute, claim, or
+                                controversy arising out of or relating to this Agreement or any breach thereof,
+                                including any claim that this Agreement or any of its parts is invalid, illegal,
+                                voidable, or void, shall be resolved through arbitration administered by the American
+                                Arbitration Association (or any like organization successor thereto) in Orange County,
+                                California, in accordance with the American Arbitration Association’s Commercial
+                                Arbitration Rules. The arbitrability of any such dispute, claim, or controversy shall be
+                                determined in such arbitration. Both parties agree and consent to such venue and waive
+                                any objection thereto. Such arbitration proceedings shall be conducted in an expedited
+                                manner in accordance with the commercial arbitration rules of the American Arbitration
+                                Association. The parties agree that the results, determinations, findings, judgments,
+                                and/or awards rendered through any such arbitration shall be final and binding and may
+                                be specifically enforced by legal proceedings. Regardless of which state laws govern
+                                this Agreement, all issues concerning arbitrability or the enforcement of the agreement
+                                to arbitrate herein shall be governed by the Federal Arbitration Act (9 U.S.C. §§ 1 et
+                                seq.) and the federal common law of arbitration.</p>{{!--<p class="desc">
+                                <strong>Mediation:</strong>All claims and disputes arising under this Agreement that
+                                cannot be resolved by the parties must first be submitted to a mediator in an attempt to
+                                resolve the dispute outside of litigation. Any such mediation shall begin within fifteen
+                                days from the request for mediation by either party. The mediation must be completed
+                                within ten days thereafter. The parties will split the cost of mediation. If the parties
+                                do not submit to this mediation in good faith, as determined by the mediator, the
+                                parties may not proceed with any other remedies under this Agreement.
+                            </p>--}}<p class="desc"><strong>Class Waiver:</strong>Each party agrees that any dispute
+                                arising
+                                out of or in connection with this Agreement, whether in arbitration or court, shall be
+                                conducted solely on an individual basis and not in a class, consolidated, or
+                                representative action, to the fullest extent permitted by law. In the event that a claim
+                                or dispute proceeds in court rather than through arbitration, each party waives any
+                                right to trial by jury in any action, proceeding, or counterclaim arising out of or
+                                related to this Agreement or any of the transactions between the parties.</p>
+                            <h4 class="head">PERSONAL DATA WE COLLECT</h4>
+                            <p class="desc"><strong>Notice to California consumers:</strong>This notice provides
+                                additional details regarding the personal information that Denefits collects about
+                                California residents and the rights afforded to them under the California Consumer
+                                Privacy Act ("CCPA").</p>
+                            <p class="desc"><strong>Collection, Use, and Disclosure of Personal
+                                    Information:</strong>Denefits may collect personal information from consumers over
+                                the past twelve (12) months, including the categories of sources from which that
+                                information was obtained. Denefits collects this information for the purposes described
+                                in the How We Use Personal Data section and shares it as described in the How We
+                                Disclose Personal Data section. Denefits may use cookies, including advertising cookies,
+                                as described in our Cookies Policy.</p>
+                            <p class="desc"><strong>Your CCPA Rights and Choices:</strong>As a California consumer and
+                                subject to certain limitations under the CCPA, you have choices regarding our use and
+                                disclosure of your personal information:</p>
+                            <p class="desc"><strong>Exercising Your Right To Know:</strong>You may request, up to two
+                                (2) times in a 12-month period, the following information about the personal information
+                                we have collected about you during the past 12 months:
+                            <ul>
+                                <li>the categories and specific pieces of personal information we have collected about
+                                    you;</li>
+                                <li>the categories of sources from which we collected the personal information;</li>
+                                <li>the business or commercial purpose for which we collected the personal information;
+                                </li>
+                                <li>the categories of third parties with whom we shared the personal information; and
+                                </li>
+                                <li>the categories of personal information about you that we disclosed for a business
+                                    purpose.</li>
+                            </ul>
+                            </p>
+                            <p class="desc"><strong>Exercising Your Right To Delete:</strong>You may request that we
+                                delete the personal information we have collected from you, subject to certain
+                                limitations under applicable law.</p>
+                            <p class="desc"><strong>Exercising The Right To Opt Out From A Sale:</strong>You may request
+                                to opt out of any “sale” of your personal information that may take place.</p>
+                            <p class="desc"><strong>Non-discrimination:</strong>The CCPA provides that you may not be
+                                discriminated against for exercising these rights.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="width:100%;position:absolute;bottom:30px;left:0;padding:12px 5rem">
+                <div style="width:100%;display:flex;justify-content:space-between">
+                    <div
+                        style="width:max-content;width:max-content;display:flex;flex-direction:column;justify-content:center">
+                        {{#if from_split}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">Contract made Remotely on</span><b>{{date_added}}
+                                at {{contract_time}}</b>{{#if show_ip}}<br><label
+                                style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{else}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">Contract
+                                made in Office on</span><b>{{date_added}} at {{contract_time}}</b>{{#if
+                            show_ip}}<br><label style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{/if}}
+
+                    </div>
+                    {{#if patient_signature}}
+                        <div style="text-align:right;max-width:35%;">
+                            <img src="{{patient_signature}}" id="signImg" style="height:60px; max-width:100%;" />
+                            <p style="font-size: 12px;color:grey">Customer Signature</p>
+                        </div>
+                    {{/if}}
+                </div>
+                <div>
+                    <p style="font-size:12px;font-weight:400;color:grey">{{#if is_practice_details}}
+                        {{practice_name}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;
+                        {{practice_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{practice_email}} {{else}}
+                        {{doctor_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{doctor_email}} {{/if}}
+                    </p>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <img src="images/PNG/powered_by_deneftis.svg" style="width:145px">
+                <p style="width:fit-content;color:grey">Page {{next_page.[7]}} of {{total_pages}}</p>
+            </div>
+        </div>
+        <div class="A4" style="page-break-before:always;height:1200px;width:850px;margin:auto">
+            <div class="content">
+                <div class="outer-wrapper">
+                    <p class="watermark">{{practice_name}}</p>
+                    <div class="inner-wrapper">
+                        <div class="row-full row-content">
+                            <p class="desc" style="margin-top:20px">To submit a request to exercise any of the rights
+                                described above, you may contact Denefits at<a href="mailto:legal@denefits.com"
+                                    target="_blank" rel="noopener noreferrer">legal@denefits.com</a>. We may need to
+                                verify your identity before responding to your request. Authentication based on a
+                                government-issued and valid identification document may be required. If you are a
+                                Customer of a Denefits User, please direct your requests directly to the Denefits User
+                                with whom you shared your personal information.</p>
+                            <p class="desc"><strong>Address and Phone Number Changes:</strong>You represent and warrant
+                                that any phone number provided to Denefits belongs to you or that you are authorized to
+                                provide such phone number. You also agree to notify Denefits immediately of any changes
+                                to your address or phone number.</p>
+                            <p class="desc"><strong>Consent to Communications:</strong>You consent to Denefits, as well
+                                as any other owner or servicer of your account, contacting you through any channel of
+                                communication and for any purpose permitted by applicable law. For informational,
+                                servicing, fraud, or collection-related communications, you agree that Denefits may use
+                                the phone numbers provided to them to contact your cellular phone or wireless device
+                                with text messages, artificial or prerecorded voice calls, and calls made by an
+                                automatic telephone dialing system. Text frequency may vary and may be recurring. You
+                                are responsible for any charges that may be billed to them by their communications
+                                carrier when contacted by Denefits. Message and data rates may vary. Denefits and any
+                                carrier are not liable for delayed or undelivered messages. Denefits assures that all
+                                communications shall be in compliance with The Fair Debt Collection Practices Act
+                                (FDCPA).</p>
+                            <p class="desc"><strong>Telephone Monitoring:</strong>You consent that all telephone
+                                conversations between you and Denefits may be monitored and recorded for record-keeping,
+                                training, and quality assurance purposes, regardless of whether you reside in a
+                                one-party or two-party consent state.</p>
+                            <h4 class="head">CUSTOMER ACCOUNT OWNERSHIP AND CANCELLATION POLICY</h4>
+                            <p class="desc"><strong>Cancellation:</strong>The Business has the sole authority to cancel
+                                the payment plan contract. Upon enrollment, the Customer shall be solely responsible for
+                                making all payments as per the other provisions of this Agreement.</p>
+                            <p class="desc"><strong>Refunds:</strong>No refunds will be provided once a Customer has
+                                enrolled in an installment payment plan contract. Any decision to refund money shall be
+                                solely made by the Business as per the mutually agreed terms.</p>
+                            <p class="desc"><strong>Right to Rescind:</strong>The customer has until midnight of the
+                                third business day to rescind the payment plan. To exercise the right to rescind, the
+                                customer shall notify the Business of the rescission by mail, email, or any other
+                                written means of communication. The Upfront Payment shall only be refunded within the
+                                three-day rescission time period.</p>
+                            <p class="desc"><strong>Refunds and Reversals:</strong>All refunds and reversals issued on
+                                behalf of the Business shall take up to 30 business days, depending upon the bank. Some
+                                refunds, particularly those issued shortly after the original charge, may appear in the
+                                form of a reversal instead of a refund. In the case of a reversal, the original charge
+                                shall be removed from the customer’s statement, and a separate credit shall not be
+                                issued. No fees shall be charged to refund a charge, but the transaction fees from the
+                                original charge shall be non-refundable.</p>
+                            <h4 class="head">BANKRUPTCY</h4>
+                            <p class="desc"><strong>Notice of Bankruptcy:</strong>If a customer files for bankruptcy,
+                                the customer shall notify Denefits immediately, along with a copy of the bankruptcy
+                                documentation as proof. This claim shall effectively terminate all payment plans with
+                                Denefits, and all payments to the Business for services received shall immediately
+                                cease. Furthermore, the customer will no longer be contacted by Denefits. The Court
+                                notice and bankruptcy documentation shall be mailed to:</p>
+                            <p class="desc px-5">Denefits, LLC<br>Attn: Legal Department<br>1 Technology Drive Building I Suite 821,<br>Irvine,
+                                CA 92618</p>
+                               
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="width:100%;position:absolute;bottom:30px;left:0;padding:12px 5rem">
+                <div style="width:100%;display:flex;justify-content:space-between">
+                    <div
+                        style="width:max-content;width:max-content;display:flex;flex-direction:column;justify-content:center">
+                        {{#if from_split}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">Contract made Remotely on</span><b>{{date_added}}
+                                at {{contract_time}}</b>{{#if show_ip}}<br><label
+                                style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{else}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">Contract
+                                made in Office on</span><b>{{date_added}} at {{contract_time}}</b>{{#if
+                            show_ip}}<br><label style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{/if}}
+
+                    </div>
+                     {{#if patient_signature}}
+                        <div style="text-align:right;max-width:35%;">
+                            <img src="{{patient_signature}}" id="signImg" style="height:60px; max-width:100%;" />
+                            <p style="font-size: 12px;color:grey">Customer Signature</p>
+                        </div>
+                    {{/if}}
+                </div>
+                <div>
+                    <p style="font-size:12px;font-weight:400;color:grey">{{#if is_practice_details}}
+                        {{practice_name}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;
+                        {{practice_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{practice_email}} {{else}}
+                        {{doctor_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{doctor_email}} {{/if}}
+                    </p>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <img src="images/PNG/powered_by_deneftis.svg" style="width:145px">
+                <p style="width:fit-content;color:grey">Page {{next_page.[8]}} of {{total_pages}}</p>
+            </div>
+        </div>
+        <div class="A4" style="page-break-before:always;height:1200px;width:850px;margin:auto">
+            <div class="content">
+                <div class="outer-wrapper">
+                    <p class="watermark">{{practice_name}}</p>
+                    <div class="inner-wrapper">
+                        <div class="row-full row-content">
+                            <p class="desc pt-3" style="margin-top:20px">An electronic copy may also be sent to<a
+                                    href="mailto:legal@Denefits.com" target="_blank"
+                                    rel="noopener noreferrer">legal@Denefits.com</a>. A phone call shall not satisfy
+                                this requirement.</p>
+                            <p class="desc"><strong>Discharge:</strong>In the event a customer’s bankruptcy is
+                                discharged, Denefits shall cancel the contract. However, a Chapter 7 bankruptcy may
+                                remain on your credit report for 10 years from the date of filing. A Chapter 13
+                                bankruptcy, may remain on your credit report for 7 (seven) years from the date of
+                                filing.</p>
+                            <p class="desc"><strong>Dismissal:</strong>If the bankruptcy is dismissed for any reason,
+                                Denefits reserves the right to resume collection efforts against the customer.</p>
+                            <h4 class="head">IN THE EVENT OF A DEATH</h4>
+                            <p class="desc"><strong>Death of Customer:</strong>In the event of a death, the executor or
+                                personal representative for the Customer shall provide written notice to Denefits of the
+                                death within 90 days.</p>
+                            <p class="desc"><strong>Collection of Outstanding Balance:</strong>Denefits may collect the
+                                remaining balance of the payment plan contract from the deceased Customer’s estate.
+                                Denefits shall never collect more than the amount owed to Denefits.</p>
+                            <p class="desc"><strong>Notice and Documentation:</strong>The notice and copy of the death
+                                certificate shall be mailed to:</p>
+                            <p class="desc px-5">Denefits, LLC<br>Attn: Legal Department<br>1 Technology Drive Building I Suite 821,<br>Irvine,
+                                CA 92618</p>
+                            <p class="desc">An electronic copy may also be sent to<a href="mailto:legal@Denefits.com"
+                                    target="_blank" rel="noopener noreferrer">legal@Denefits.com</a>.</p>
+                            <h4 class="head">ADDITIONAL PROVISIONS</h4>
+                            <p class="desc"><strong>Means of Communication:</strong>The user ("Customer") acknowledges
+                                and consents to receiving communications from Denefits, LLC ("Denefits") via phone,
+                                text, letter, and/or email when they create a payment plan contract. To stop receiving
+                                communication from Denefits, the Customer must submit a written request directly to
+                                Denefits. Once the request is received, Denefits will remove the Customer from its call
+                                list and only send correspondence regarding the outstanding debt via US Mail. The
+                                Customer must send the notification to:</p>
+                            <p class="desc px-5">Denefits, LLC<br>Attn: Legal Department<br>1 Technology Drive Building I Suite 821,<br>Irvine,
+                                CA 92618</p>
+                            <p class="desc">The Customer may also email<a href="mailto:legal@Denefits.com"
+                                    target="_blank" rel="noopener noreferrer">legal@Denefits.com</a>.</p>
+                            <p class="desc"><strong>Automation</strong>The Denefits software provides automated
+                                notifications directly to the Customer via email and text message. These automated
+                                messages will include the reason for the notification and a direct link to the
+                                Customer's account. The Customer agrees to receive these messages during the enrollment
+                                process but has the opportunity to opt-out at their convenience.</p>
+                            <p class="desc"><strong>Assignability:</strong>Denefits reserves the right to assign the
+                                customer’s account to another party at any time. The Customer's responsibilities are
+                                non-transferable and non-assignable without written consent from the Business.</p>
+                            <p class="desc"><strong>Enforceability and Severability:</strong>Should any one or more
+                                provisions of this Agreement be determined to be unenforceable as to one or more of the
+                                parties hereto, all other provisions nevertheless shall remain effective and binding
+                                upon the parties hereto.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="width:100%;position:absolute;bottom:30px;left:0;padding:12px 5rem">
+                <div style="width:100%;display:flex;justify-content:space-between">
+                    <div
+                        style="width:max-content;width:max-content;display:flex;flex-direction:column;justify-content:center">
+                        {{#if from_split}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">Contract made Remotely on</span><b>{{date_added}}
+                                at {{contract_time}}</b>{{#if show_ip}}<br><label
+                                style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{else}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">Contract
+                                made in Office on</span><b>{{date_added}} at {{contract_time}}</b>{{#if
+                            show_ip}}<br><label style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP:</span><b>{{ip_address}}</b></label>{{/if}}
+                        </label>{{/if}}
+
+                    </div>
+                     {{#if patient_signature}}
+                        <div style="text-align:right;max-width:35%;">
+                            <img src="{{patient_signature}}" id="signImg" style="height:60px; max-width:100%;" />
+                            <p style="font-size: 12px;color:grey">Customer Signature</p>
+                        </div>
+                    {{/if}}
+                </div>
+                <div>
+                    <p style="font-size:12px;font-weight:400;color:grey">{{#if is_practice_details}}
+                        {{practice_name}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;
+                        {{practice_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{practice_email}} {{else}}
+                        {{doctor_mobile}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp; {{doctor_email}} {{/if}}
+                    </p>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <img src="images/PNG/powered_by_deneftis.svg" style="width:145px">
+                <p style="width:fit-content;color:grey">Page {{next_page.[9]}} of {{total_pages}}</p>
+            </div>
+        </div>
+        <div class="A4" style="page-break-before:always;height:1200px;width:850px;margin:auto">
+            <div class="content">
+                <div class="outer-wrapper">
+                    <p class="watermark">{{practice_name}}</p>
+                    <div class="inner-wrapper">
+                        <div class="row-full row-content">
+                            <p class="desc"><strong>Governing Law:</strong>This Agreement and any matters hereunder
+                                shall be governed by and construed in accordance with the laws of the State of
+                                California, excluding its conflict of law rules. The Customer hereby consents to the
+                                exclusive jurisdiction of Orange County and the venue of the courts of the State of
+                                California with respect to the resolution of any suit, action, or proceeding hereunder.
+                            </p>
+                            <p class="desc"><strong>No Waiver:</strong>The failure or delay in exercising any right or
+                                remedy provided by this Agreement or by law shall not constitute a waiver of the right
+                                or remedy or a waiver of other rights or remedies. The single or partial exercise of any
+                                right or remedy provided by this Agreement or by law shall not preclude or restrict the
+                                further exercise of any such right or remedy.</p>
+                            <p class="desc"><strong>Execution:</strong>Upon the signature of the Customer below, this
+                                agreement shall become binding and enforceable by both parties.</p>
+                            <h4 class="head">CHANGES TO TERMS OF USE</h4>
+                            <p class="desc">These Terms of Use shall remain in full force and effect while you use the
+                                Site and Mobile Apps. We reserve the right to change, modify, or update These Terms of
+                                Use and the other documents that are part of the Agreement at any time, as we reasonably
+                                deem appropriate.</p>
+                            <h4 class="head">SCHEDULE A</h4>
+                            <p class="desc">Enrollment Fee: To be determined by the Business, a minimum of
+                                {{enrollmentFee}}</p>
+                            <p class="desc">Late Fee: ${{late_fee}} per instance</p>
+                            <p class="desc">Cancellation Fee:&nbsp;$
+                                {{#if cancel_contract_fee}}
+                                  {{cancel_contract_fee}}
+                                 {{else}}
+                                 45.00
+                                {{/if}}
+                            <p class="desc">Payment Due Date Change Fee: This is calculated at the time of the request
+                                based on the recurring payment amount and the length of the extension requested. There
+                                is a minimum fee of $10.00.
+                            </p>
+                            <p class="desc">Transaction Fee: $3.00 OR 3% whichever is higher. An additional $1.00 OR 1%
+                                (whichever is higher) will be charged as an overseas platform fee if you use a non-US
+                                debit/credit card.
+                            </p>
+                             <p class="desc">
+                                {{#if is_deferred_contract}}
+                                    Interest Rate: The rate of interest {{interest_rate}} will start getting charged after the deferred duration or if the payment gets missed during the deferred duration or the contract is edited during the deferred duration.
+                                {{/if}}
+                            </p>
+                            <div class="row-full row-bottom" style="padding:10px;margin-bottom:30px">
+                                <div class="row-half text-left"><span style="display:block">{{issuer_name}}</span><span
+                                        class="signature" style="margin-top:0;border-top:1px solid #000">Business</span>
+                                </div>
+                                <div class="row-full" style="justify-content:space-between;margin-top:15px">
+                                    <div class="col pt-4">
+                                        <p class="desc"><i>Each party agrees that the electronic signatures, whether
+                                                digital or encrypted, of the parties included in this Agreement, are
+                                                intended to authenticate this writing and to have the same force and
+                                                effect as manual signatures.</i></p>
+                                        <p class="desc"><i>I hereby certify that I have reviewed this disclosure along
+                                                with the documents provided, and agree to the terms and conditions
+                                                stated herein</i></p>
+                                    </div>
+                                    <div class="row-half" style="padding-top:40px"></div>
+                                    <div class="row-half">
+
+                                        <div class="sign-img-wrap text-right" style="z-index:999 !important;">
+                                            {{#if patient_signature}}
+                                                <div class="sign-img">
+                                                    <img src="{{patient_signature}}">
+                                                </div>
+                                                <p>{{date_added}} at {{contract_time}}
+                                                    {{!-- {{#if show_ip}}
+                                                    <label> through IP: {{ip_address}}</label>
+                                                    {{/if}} --}}
+                                                </p>
+                                            {{else}}
+                                                <p style="font-size: 16px; font-weight:bold;">
+                                                    <div>Customer Name: {{customer_sign_name}}</div>
+                                                    <div style="padding-top: 6px;">Customer SSN: {{customer_unique_ssn}}</div>
+                                                </p>
+                                            {{/if}}
+                                            <p class="desc" {{#if ip_address}}>
+                                                {{ip_address}}&nbsp;&nbsp;{{time_zone}}
+                                            </p {{/if}}>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <img src="images/PNG/powered_by_deneftis.svg" style="width:145px">
+                <p style="width:fit-content;color:grey">Page {{next_page.[10]}} of {{total_pages}}</p>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+    {{#if is_show_consent_form}}<div class="main-container" id="A4"
+        style="background:#fff;max-width:970px;margin:auto;font-family:Poppins,sans-serif;font-size:14px">
+        <div class="A4" style="page-break-before:always;height:1200px;width:850px;margin:auto">
+            <div class="content">
+                <div class="outer-wrapper">
+                    <p class="watermark">{{practice_name}}</p>
+                    <div class="inner-wrapper">
+                        <div class="row-full text-center">{{!--<h1>Consent Form</h1>--}}<h2>ACH / Card Payment
+                                Authorization</h2>
+                        </div>
+                        <div class="row-full row-content">
+                            <p style="margin-bottom:9px">I , {{#if customer_name}}<strong
+                                    style="padding-bottom:2px;border-bottom:0 solid #656565">{{customer_name}}</strong>{{else}}<strong>________________________</strong>{{/if}}
+
+                                authorized signer on this account. I authorize Denefits to make regularly scheduled
+                                charges to my Credit Card/Bank account in the amount of my Denefits statement balance
+                                for my account, on the payment date indicated. I understand and agree that Denefits will
+                                debit my Credit Card/Bank account each month via Automatic Clearing House (ACH) debit,
+                                even if I have made other payments between the statement date and the scheduled payment
+                                date, including if I paid the statement balance. These charges will appear on my payment
+                                methods monthly statement and can be reviewed anytime through the Denefits customer
+                                portal.</p>
+                            <div class="desc">By enrolling in Denefits’ recurring Automatic Monthly Payment Program
+                                ("Automatic Monthly Payment Program"), I also acknowledge the following:<ul>
+                                    <li>
+                                        <p class="desc">If the scheduled date of any electronic funds transfer ("EFT")
+                                            falls on a weekend or holiday, my EFT can be initiated as of the next
+                                            business day.</p>
+                                    </li>
+                                    <li>
+                                        <p class="desc">If any EFT is returned or dishonored for any reason, including
+                                            non-sufficient funds, a stop payment order, or a closed account, Denefits
+                                            may at its discretion attempt to process the charge again. I further agree
+                                            to an additional $25 charge for each returned or dishonored EFT which will
+                                            be initiated as a separate transaction from the authorized recurring
+                                            payment.</p>
+                                    </li>
+                                    <li>
+                                        <p class="desc">I agree not to dispute this recurring billing with my financial
+                                            institution so long as the transactions correspond to the terms indicated in
+                                            this authorization form.</p>
+                                    </li>
+                                    <li>
+                                        <p class="desc">I understand that this authorization will remain in effect
+                                            unless I cancel it in writing, and I agree to notify<a
+                                                href="mailto:legal@denefits.com" target="_blank"
+                                                rel="noopener noreferrer">legal@denefits.com</a>in writing of any
+                                            changes in my account information or termination of this authorization at
+                                            least 15 days prior to the next billing date.</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <h4 class="head">Payment for Service</h4>
+                            <p class="desc">I accept that I am financially responsible for all services rendered on my
+                                behalf for which a charge may be associated. I accept personal responsibility for all
+                                payments, down payments, late fees, plus any collection costs for amounts personally
+                                owed by me.</p>
+                            <h4 class="head">Unpaid Account Balances</h4>
+                            <p class="desc">I acknowledge that if I fail to make payments for services rendered, my
+                                account may be turned over to a collection agency. I will be responsible to pay the
+                                collection agency’s fees that may be incurred in the collection of any outstanding
+                                balance.</p>
+                            <h4 class="head">Credit Reporting</h4>
+                            <p class="desc">Denefits may report my payment activities to credit bureaus as an
+                                installment payment to help build credit. Denefits may also report my defaulted debt to
+                                credit bureaus after payment is 31 days or more past due.</p>
+                            <h4 class="head">Billing Details</h4>
+                            <p class="desc">Billing Street Address: {{#if patient_only_address}}<strong
+                                    style="padding-bottom:2px;border-bottom:0 solid #656565">{{patient_only_address}}</strong>{{else}}<strong>________________________</strong>{{/if}}
+                                <br>City:
+                                {{#if city}}&nbsp;<strong
+                                    style="padding-bottom:2px;border-bottom:0 solid #656565">{{city}}</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                {{else}}<strong>________</strong>{{/if}}
+                                State: {{#if state_name}}&nbsp;<strong
+                                    style="padding-bottom:2px;border-bottom:0 solid #656565">{{state_name}}</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                {{else}}<strong>_________</strong>{{/if}}
+                                Zip: {{#if zip}}&nbsp;<strong
+                                    style="padding-bottom:2px;border-bottom:0 solid #656565">{{zip}}</strong>{{else}}<strong>________</strong>{{/if}}
+                                <br>Phone
+                                No: {{#if patient_mobile}}&nbsp;<strong
+                                    style="padding-bottom:2px;border-bottom:0 solid #656565">{{patient_mobile}}</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                {{else}}<strong>________________________</strong>{{/if}}
+                                Email: {{#if
+                                patient_email}}&nbsp;<strong
+                                    style="padding-bottom:2px;border-bottom:0 solid #656565">{{patient_email}}</strong>.
+                                {{else}}<strong>________________________</strong>{{/if}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <img src="images/PNG/powered_by_deneftis.svg" style="width:145px">
+                <p style="width:fit-content;color:grey">Page {{next_page.[11]}} of {{total_pages}}</p>
+            </div>
+        </div>
+        <div class="A4" style="page-break-before:always;height:1200px;width:850px;margin:auto">
+            <div class="content">
+                <div class="outer-wrapper">
+                    <p class="watermark">{{practice_name}}</p>
+                    <div class="inner-wrapper">
+                        <div class="row-full text-center">{{!--<h1>Consent Form</h1>--}}</div>
+                        <div class="row-full row-content">
+                            <h4 class="head">Card Information</h4>
+                            <p class="desc">Card Type: {{#if brand}}&nbsp;<strong
+                                    style="padding-bottom:2px;border-bottom:0 solid #656565">{{brand}}</strong>{{else}}<strong>________________________</strong>{{/if}}
+                                <br>Cardholder’s
+                                Name: {{#if card_number}}&nbsp;<strong
+                                    style="padding-bottom:2px;border-bottom:0 solid #656565">{{customer_name}}</strong>{{else}}<strong>________________________</strong>{{/if}}
+                                <br>Card
+                                Number: {{#if card_number}}&nbsp;<strong
+                                    style="padding-bottom:2px;border-bottom:0 solid #656565">**** **** **** {{
+                                    card_number}}</strong>{{else}}<strong>________________________</strong>{{/if}}
+                                <br>Expiration
+                                Date: {{#if exp_month}}&nbsp;<strong
+                                    style="padding-bottom:2px;border-bottom:0 solid #656565">{{exp_month }} /
+                                    {{exp_year}}</strong>{{else}}<strong>____/____</strong>{{/if }}<br>Security Code
+                                (CVV): {{#if card_number}}&nbsp;<strong
+                                    style="padding-bottom:2px;border-bottom:0 solid #656565">***</strong>{{else}}<strong>_______</strong>{{/if}}
+
+                            </p>
+                            <h4 class="head">Bank (ACH) Information</h4>
+                            <p class="desc">Name on Account: {{#if bank_name}}&nbsp;<strong
+                                    style="padding-bottom:2px;border-bottom:0 solid #656565">{{customer_name}}</strong>{{else}}<strong>________________________</strong>{{/if}}
+                                <br>Bank
+                                Name: {{#if bank_name}}&nbsp;<strong
+                                    style="padding-bottom:2px;border-bottom:0 solid #656565">{{bank_name}}</strong>{{else}}<strong>________________________</strong>{{/if}}
+                                <br>Account
+                                Number: {{#if bank_name}}&nbsp;<strong
+                                    style="padding-bottom:2px;border-bottom:0 solid #656565">************
+                                    {{account_number}}</strong>{{else}}<strong>________________________</strong>{{/if}}
+                                <br>Routing
+                                Number: {{#if bank_name}}&nbsp;<strong
+                                    style="padding-bottom:2px;border-bottom:0 solid #656565">*********</strong>{{else}}<strong>________________________</strong>{{/if}}
+
+                            </p>
+                            <h4 class="head">Agreement to Accept Terms and Conditions, Periodic Statements, Notices,
+                                Confirmations and Disclosures in an Electronic Format.</h4>
+                            <p class="desc">In this Agreement, the terms "we", "us" and "our" refer to Denefits LLC
+                                ("Denefits"), and the terms "you" and "your" refer to you as a Denefits customer. This
+                                Agreement applies to all Denefits accounts established with you (each is an "Account").
+                            </p>
+                            <p class="desc">This Electronic Disclosure and Consent contains important information that
+                                you are entitled to receive before you consent to transact business with us
+                                electronically</p>
+                            <h4 class="head">Electronic Acceptance of Account Terms</h4>
+                            <p class="desc">You acknowledge and agree that (a) the Terms and Conditions applicable to
+                                your Account(s) (the "Account Terms"), any amendments to the Account Terms, and any
+                                one-time authorization for an electronic funds transfer ("EFT") or preauthorization for
+                                EFTs to pay amounts due and payable under my Account can be entered into electronically
+                                and enforceable in accordance with laws applicable to the recognition of electronic
+                                signatures, including without limitation the Electronic Signatures in Global and
+                                National Commerce Act (the E-SIGN Act); (b) the electronic signature utilizing the
+                                designated method constitutes your signature, acceptance, and agreement the same as if
+                                actually signed in writing; and (c) this Agreement shall constitute an "original"
+                                document when printed from electronic files and records established and maintained by
+                                either party in the normal course of business.</p>
+                            <h4 class="head">Consent to Receive Records in an Electronic Format</h4>
+                            <p class="desc">By clicking your acceptance below, you hereby agree to electronic delivery
+                                of notices and records relating to your Account ("Records") in lieu of receiving such
+                                Records in paper form through postal delivery and not otherwise required by regulation
+                                or policy to be sent exclusively by postal delivery. Records eligible for electronic
+                                delivery include periodic statements of your Account. By agreeing to electronic
+                                delivery, you will not receive these disclosures by mail.</p>
+                            <p class="desc">We may always, in our sole discretion, provide you with any communication of
+                                Records in writing, even if you have chosen to receive it electronically.<br>You
+                                acknowledge and agree that your consent above is being provided in connection with a
+                                transaction affecting interstate commerce that is subject to the E-SIGN Act, and that
+                                you and we both intend that the E-SIGN ACT apply to the maximum extent to permit us the
+                                ability to conduct business with you by electronic means.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <img src="images/PNG/powered_by_deneftis.svg" style="width:145px">
+                <p style="width:fit-content;color:grey">Page {{next_page.[12]}} of {{total_pages}}</p>
+            </div>
+        </div>
+        <div class="A4" style="page-break-before:always;height:1200px;width:850px;margin:auto">
+            <div class="content">
+                <div class="outer-wrapper">
+                    <p class="watermark">{{practice_name}}</p>
+                    <div class="inner-wrapper">
+                        <div class="row-full text-center">{{!--<h1>Consent Form</h1>--}}</div>
+                        <div class="row-full row-content">
+                            <h4 class="head">Changes of Terms; Termination</h4>
+                            <p class="desc">We reserve the right, at any time and in our sole discretion, to change the
+                                terms and conditions under which we provide Records to you electronically, or to
+                                discontinue providing Records to you electronically. We will provide you with advance
+                                notice of any such change or termination. Your decision to continue to receive Records
+                                electronically will constitute your agreement to any such change.</p>
+                            <h4 class="head">HIPAA (Health Insurance Portability and Accountability Act) Disclosure</h4>
+                            <p class="desc">I consent that if {{#if practice_name}}<strong
+                                    style="padding-bottom:2px;border-bottom:0 solid #656565">{{practice_name}}</strong>{{else}}<strong>________________________</strong>{{/if}}
+
+                                is a medical provider of any sort, it may use and disclose Protected Health Information
+                                (PHI) or Individually Identifiable Health Information (IIHI) about me to carry out
+                                Treatment, Payment, and Healthcare operations (TPO). I, {{#if customer_name}}<strong
+                                    style="padding-bottom:2px;border-bottom:0 solid #656565">{{customer_name}}</strong>{{else}}<strong>________________________</strong>{{/if}}
+
+                                , authorize {{#if practice_name}}<strong
+                                    style="padding-bottom:2px;border-bottom:0 solid #656565">{{practice_name}}</strong>{{else}}<strong>________________________</strong>{{/if}}
+
+                                to release my protected health information to Denefits.</p>
+                            <h4 style="padding:0 15px;margin-bottom:0">PLEASE PRINT OR SAVE A COPY OF THIS AGREEMENT FOR
+                                YOUR RECORDS.</h4><br><br>
+                            <div class="row-full text-left"><span style="display:block">{{customer_name}}</span><span
+                                    class="consent_signature" style="margin-bottom:5px;margin-top:0">Name
+                                    (printed)</span></div>
+                            <div class="row-full text-left">
+                                <p
+                                    style="display:block;width:50%;min-height:20px;padding:0;margin:0 15px;font-weight:700;padding-bottom:2px">
+                                    <img src="{{patient_signature}}" style="height:60px">
+                                </p><span class="consent_signature"
+                                    style="margin-bottom:5px;margin-top:0">Signature</span>
+                            </div>
+                            <div class="row-full text-left"><span style="display:block">{{date_added}}</span><span
+                                    class="consent_signature" style="margin-top:0">Enrollment Date</span></div>
+                            <div class="row-full text-left" style="margin-top:10px">{{#if from_split}}<label
+                                    style="font-size:14px;font-weight:400;line-height:23px">Contract made Remotely
+                                    on<b>{{date_added}} at
+                                        {{contract_time}}</b><br>IP:<b>{{ip_address}}</b></label>{{else}}<label
+                                    style="font-size:14px;font-weight:400;line-height:23px">Contract made in Office
+                                    on<b>{{date_added}} at
+                                        {{contract_time}}</b><br>IP:<b>{{ip_address}}</b></label>{{/if}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <img src="images/PNG/powered_by_deneftis.svg" style="width:145px">
+                <p style="width:fit-content;color:grey">Page {{next_page.[13]}} of {{total_pages}}</p>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+    <div class="footer-new" style="text-align:center;position:absolute;bottom:40px;left:60px">
+        <p style="color:#7f8fa4;font-size:14px;padding-bottom:10px">This is system generated statement. If you have any
+            queries, you can reach us anytime at support@denefits.com.</p>
+    </div>
+</body>
 
 </html>
+<style>
+    * {
+        box-sizing: border-box
+    }
+
+    ul ul {
+        margin-top: 5px
+    }
+
+    .table-heading-sm {
+        padding: 7px;
+        background: #2f2116;
+        color: #fff;
+        padding-left: 10px
+    }
+
+    .A4 {
+        position: relative
+    }
+
+    .cont-table {
+        border-collapse: collapse;
+        margin-bottom: 20px
+    }
+
+    .cont-table td {
+        padding: 10px;
+        border: 1px solid #000
+    }
+
+    .cont-table ol {
+        padding-left: 25px
+    }
+
+    .table-heading-lg {
+        margin-top: 15px;
+        text-align: center;
+        font-size: 20px;
+        margin-bottom: 15px;
+        font-weight: 600
+    }
+
+    ol {
+        padding-right: 10px;
+        padding-left: 15px;
+        margin-top: 10px
+    }
+
+    li {
+        margin-bottom: 10px;
+        font-size: 15px;
+        line-height: 1.3
+    }
+
+    .serviceTable {
+        border-bottom: 1px solid #d7d7d7
+    }
+
+    .serviceTable:last-child {
+        border-bottom: transparent
+    }
+
+    .head {
+        font-size: 18px;
+        text-align: left;
+        margin-bottom: 8px;
+        font-weight: 600;
+        line-height: 1;
+        margin-top: 20px
+    }
+
+    .desc {
+        font-size: 14px;
+        margin-bottom: 10px
+    }
+
+    body {
+        font-family: Poppins, sans-serif;
+        font-size: 14px
+    }
+
+    * {
+        box-sizing: border-box
+    }
+
+    .row-half {
+        width: 50%;
+        float: left
+    }
+
+    .row-content {
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-bottom: 5px
+    }
+
+    .desc {
+        font-size: 14px
+    }
+
+    .row-pay label {
+        border: 1px solid #000;
+        display: block;
+        width: 100%;
+        border-right: 0;
+        text-align: center;
+        padding: 7px
+    }
+
+    .row-pay .cont {
+        padding: 10px;
+        border: 1px solid #000;
+        border-top: 0;
+        border-right: 0;
+        text-align: center
+    }
+
+    .outer-wrapper {
+        margin-top: 27px;
+        position: relative
+    }
+
+    .inner-wrapper {
+        border: 1px solid #000;
+        width: 100%;
+        float: left;
+        background: #fff !important
+    }
+
+    .col {
+        padding: 5px;
+        padding-bottom: 0
+    }
+
+    label {
+        font-weight: 600;
+        font-size: 15px;
+        margin-bottom: 0
+    }
+
+    .row-full {
+        float: left;
+        width: 100%
+    }
+
+    p {
+        margin: 0;
+        line-height: 1;
+        width: 100%;
+        display: block;
+        margin-bottom: 5px;
+        line-height: 1.4
+    }
+
+    .col-one-fifth {
+        width: 20%;
+        float: left
+    }
+
+    .row-cal {
+        display: flex
+    }
+
+    .row-cal p {
+        margin: 0;
+        width: 100%;
+        font-size: 12px;
+        line-height: 11px;
+        min-height: 65px
+    }
+
+    .row-cal label {
+        min-height: 42px;
+        display: block
+    }
+
+    .col-one-fourth {
+        width: 25%;
+        float: left
+    }
+
+    .col-one-fourth>label {
+        font-size: 14px;
+        padding: 7px 0
+    }
+
+    .d-flex {
+        display: flex;
+        float: none
+    }
+
+    .align-center {
+        align-items: center
+    }
+
+    .text {
+        min-width: 60px;
+        border-bottom: 1px solid #000;
+        display: inline-block;
+        margin-left: 3px;
+        margin-right: 3px
+    }
+
+    .row-cont span {
+        display: inline-block;
+        margin-left: 5px;
+        margin-right: 5px
+    }
+
+    .row-cont {
+        padding: 0 5px
+    }
+
+    .cont-wrap {
+        margin-bottom: 5px;
+        display: flex-end
+    }
+
+    .row-cont label {
+        min-width: 100px
+    }
+
+    .text-center {
+        text-align: center
+    }
+
+    h1 {
+        border-bottom: 1px solid #000;
+        margin: 0;
+        padding: 10px;
+        font-size: 29px;
+        text-transform: uppercase;
+        font-weight: 600
+    }
+
+    small {
+        font-size: 13px;
+        padding-bottom: 10px;
+        display: inline-block
+    }
+
+    .row-cont-second {
+        border-top: 1px solid #000;
+        border-bottom: 1px solid #000
+    }
+
+    .row-cont-second label {
+        font-weight: 400
+    }
+
+    .row-cont-second .row-half {
+        padding: 10px
+    }
+
+    .row-cont-second .row-half:first-child {
+        border-right: 1px solid #000
+    }
+
+    .row-cont-second .cont-wrap {
+        margin-bottom: 8px;
+        align-items: flex-end
+    }
+
+    h3,
+    h5 {
+        margin: 0
+    }
+
+    h5 {
+        font-size: 13px;
+        margin-top: 5px;
+        margin-bottom: 8px
+    }
+
+    .info {
+        font-size: 13px
+    }
+
+    .row-info .cont-wrap {
+        display: block;
+        text-align: left
+    }
+
+    .row-info {
+        border-top: 1px solid #000
+    }
+
+    .row-info h5 {
+        font-size: 16px
+    }
+
+    .row-info p {
+        display: inline
+    }
+
+    .row-info {
+        padding: 10px
+    }
+
+    .signature {
+        margin-top: 30px;
+        font-size: 15px;
+        font-weight: 600;
+        min-width: 150px;
+        display: inline-block
+    }
+
+    .text-left {
+        text-align: left
+    }
+
+    .text-right {
+        text-align: right
+    }
+
+    .sign-img {
+        height: 120px;
+        width: 300px;
+        margin-top: 20px;
+        border: 1px solid #000;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center
+    }
+
+    .sign-img img {
+        max-width: 100%;
+        max-height: 100%;
+        display: block;
+        margin: auto
+    }
+
+    .row-service {
+        padding: 10px
+    }
+
+    h4 {
+        font-size: 15px;
+        width: 100%;
+        text-align: center;
+        margin: 0;
+        margin-bottom: 10px
+    }
+
+    .block {
+        height: 35px;
+        border: 1px solid #000;
+        margin-bottom: 8px;
+        width: calc(100% - 10px);
+        margin-left: 5px;
+        margin-right: 5px;
+        padding: 5px
+    }
+
+    .block span {
+        display: inline-block;
+        margin-right: 3px;
+        vertical-align: middle;
+        padding-top: 5px
+    }
+
+    .main-container .content span {
+        border-bottom: 0
+    }
+
+    .content {
+        background: 0 0;
+        padding: 1px 40px 18px 40px;
+        height: 98%;
+        margin: 0 40px
+    }
+
+    .header {
+        height: 67px
+    }
+
+    .consent_signature {
+        margin-top: 30px;
+        font-size: 15px;
+        font-weight: 600;
+        min-width: 250px;
+        border-top: 1px solid #000;
+        display: inline-block
+    }
+
+    .watermark {
+        word-break: break-all;
+        color: #000;
+        opacity: .15;
+        width: 1283px;
+        position: absolute;
+        text-align: center;
+        transform: rotate(303deg);
+        font-size: 119px;
+        z-index: 0;
+        line-height: 140px;
+        left: -287px;
+        top: 498px
+    }
+
+    .helpPage {
+        padding: 12px;
+        font-weight: 700
+    }
+
+    .helpPage li {
+        border-bottom: 1px solid;
+        font-size: 17px;
+        padding: 13px
+    }
+
+    @media print {
+        @page {
+            size: 21cm 29.7cm;
+            margin: 0
+        }
+    }
+</style>
