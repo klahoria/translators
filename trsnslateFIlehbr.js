@@ -1,17 +1,12 @@
 const fs = require("fs");
 const translate = require("@iamtraction/google-translate");
 
-// Regex patterns
 const HANDLEBARS_VAR_RE = /{{[^}]+}}/g;
 const URL_RE = /(https?:\/\/[^\s<>"']+)/gi;
 const TAG_RE = /(<[^>]+>)/g;
-
-// Limit concurrent translations
+const HANDLEBARS_WHOLE_RE = /^{{[^}]+}}$/;
 const MAX_CONCURRENT = 5;
 
-/**
- * A simple concurrency limiter
- */
 function createLimiter(limit) {
   const queue = [];
   let active = 0;
@@ -32,56 +27,54 @@ function createLimiter(limit) {
   return run;
 }
 
-/**
- * Translates a content string, skipping URLs and Handlebars expressions
- */
 async function translateTextContent(str, targetLang) {
-  if (!str.trim()) return str;
+  const isSkippable = (s) =>
+    !s.trim() ||
+    !/[a-zA-Z0-9]/.test(s) ||
+    /^[-–—_.:;|+*~!@#$%^&()\[\]{}<>"'=\\\/\n\r\t\s]+$/.test(s) ||
+    HANDLEBARS_WHOLE_RE.test(s.trim());
 
-  const handlebarsVars = [...str.matchAll(HANDLEBARS_VAR_RE)];
-  const urls = [...str.matchAll(URL_RE)];
+  if (isSkippable(str)) return str;
 
-  const placeholders = [];
-  let replaced = str;
+  const replaced = str;
+  if (
+    !HANDLEBARS_WHOLE_RE.test(replaced.trim()) &&
+    HANDLEBARS_VAR_RE.test(replaced.trim())
+  ) {
+    let translated = "";
+    const values = replaced
+      .split(HANDLEBARS_VAR_RE)
+      .filter(Boolean)
+      .filter((v) => v && /[a-zA-Z0-9]/.test(v) && !/^\s*[\r\n]+\s*$/.test(v));
 
-  // handlebarsVars.forEach((match, idx) => {
-  //   const key = `___HB_VAR_${idx}___`;
-  //   replaced = replaced.replace(match[0], key);
-  //   placeholders.push({ key, value: match[0] });
-  // });
+    if (!values.length) return replaced;
 
-  // urls.forEach((match, idx) => {
-  //   const key = `___URL_${idx}___`;
-  //   replaced = replaced.replace(match[0], key);
-  //   placeholders.push({ key, value: match[0] });
-  // });
-
-  let translated = "";
-  try {
-    const res = await translate(replaced, { to: targetLang });
-    translated = res.text;
-  } catch (err) {
-    console.error("Translation error:", err);
-    translated = str;
+    for (const value of values) {
+      try {
+        const res = await translate(value, { to: targetLang });
+        translated += res.text;
+      } catch (err) {
+        console.error("Translation error:", err);
+        translated += str;
+      }
+    }
+    return translated;
+  } else {
+    try {
+      const res = await translate(replaced, { to: targetLang });
+      return res.text;
+    } catch (err) {
+      console.error("Translation error:", err);
+      return str;
+    }
   }
-
-  // Restore original placeholders
-  for (const { key, value } of placeholders) {
-    translated = translated.replace(key, value);
-  }
-
-  return translated;
 }
 
-/**
- * Translates a Handlebars template file and writes to output using limited concurrency
- */
 async function translateHandlebars(
   template,
   targetLang = "es",
   outputFilePath = "translated.handlebars"
 ) {
-  const tokens = template.split(TAG_RE);
   const writeStream = fs.createWriteStream(outputFilePath, {
     flags: "w",
     encoding: "utf8",
@@ -89,9 +82,25 @@ async function translateHandlebars(
 
   const runWithLimit = createLimiter(MAX_CONCURRENT);
 
+  const styleBlockRegex = /<style[^>]*>[\s\S]*?<\/style>/gi;
+  const styleBlocks = [];
+  let templateCopy = template;
+
+  // Extract style blocks
+  
+  templateCopy = templateCopy.replace(styleBlockRegex, (match) => {
+    styleBlocks.push(match);
+    return `___STYLE_BLOCK_${styleBlocks.length - 1}___`;
+  });
+
+  const tokens = templateCopy.split(TAG_RE);
+
   const translateToken = async (token) => {
     if (token.match(TAG_RE)) {
       writeStream.write(token);
+    } else if (/___STYLE_BLOCK_\d+___/.test(token)) {
+      const index = parseInt(token.match(/(\d+)/)[0], 10);
+      writeStream.write(styleBlocks[index]); // Write style block unmodified
     } else {
       const translated = await runWithLimit(() =>
         translateTextContent(token, targetLang)
@@ -113,10 +122,8 @@ module.exports = {
   translateHandlebars,
 };
 
+// Example run
 (async () => {
-  const fs = require("fs");
-  // const { translateHandlebars } = require("./translateHandlebars");
-
   const template = fs.readFileSync("./contract.handlebars", "utf-8");
   await translateHandlebars(template, "ja", "./contract.ja.handlebars");
 })();
