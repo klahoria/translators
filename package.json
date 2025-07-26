@@ -1,4 +1,8 @@
 {
+   "scripts": {
+    "start": "node server.js",
+    "build": "echo 'No build step'"
+  },
   "dependencies": {
     "@iamtraction/google-translate": "^2.0.1",
     "cors": "^2.8.5",
