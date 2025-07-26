@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html style="background-color:#fff!important">
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="stylesheets/pdf.css">
+</head>
+
+<body style="background-color:#fff;position:relative">{{#if is_contract}}<div class="container" id="A4"
+        style="background:#fff;max-width:970px;font-family:Arial">
+        <div class="A4" style="width:850px;display:table;height:1200px;position:relative">
+            <div class="top_blue_strip" style="width:100%;height:10px;background-color:#0a5094"></div>
+            <div class="headerLogo" style="display:flex;margin:40px 40px 0 40px">
+                <div style="width:20%"><img src="{{doctor_image}}" style="max-width:100%;max-height:60px"></div>
+                <div style="width:52%;font-size:27px;font-weight:700;text-align:center">
+                    <p>支払い計画契約</p><img src="images/PNG/powered_by_deneftis.svg" style="width:31%">
+                </div>
+                <div style="margin-top:20px">
+                    <p>契約コード：<b>{{contrict_code}}</b></p>
+                    <p>契約ステータス：<b>{{payment_status}}</b></p>
+                </div>
+            </div>
+            <div class="content" style="margin:0 40px;padding-top:10px">
+                <div class="customer_details_container"
+                    style="width:100%;background-color:#d9d9d9;border-radius:4px;display:flex;padding:30px">
+                    <div class="customer_details" style="width:50%">
+                        <p
+                            style="font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:#767676">請求先</p>
+                        <p style="font-size:20px;font-weight:700;margin:11px 0">{{customer_name}}</p>
+                        <p>{{#if is_minor}}<span style="color:#626262;border-bottom:transparent">ガーディアン
+                                ：</span>{{guardian name}} {{/if}}</p>
+                        <p>{{#if patient_email}}<span style="color:#626262;border-bottom:transparent">メール
+                                ：</span>{{patient_email}} {{/if}}</p>
+                        <p>{{#if patient_mobile}}<span style="color:#626262;border-bottom:transparent">電話
+                                ：</span>{{patient_mobile}} {{/if}}</p>
+                        <p>{{#if date_of_birth}}<span style="color:#626262;border-bottom:transparent">生年月日
+                                ：</span>{{date_of_birth}} {{/if}}</p>
+                        <p>{{#if patient_ssn_display}}<span style="color:#626262;border-bottom:transparent">SSN
+                                ：</span>{{patient_ssn_display}} {{/if}}</p>
+                        <p>{{#if dl_number}}<span style="color:#626262;border-bottom:transparent">DL番号
+                                ：</span>{{dl_number}} {{/if}}</p>
+                        <p style="margin-top:15px">{{#if patient_address}}<span
+                                style="color:#626262;border-bottom:transparent">住所
+                                ：</span>{{patient_address}} {{/if}}</p>
+                    </div>
+                    <div class="business_details" style="width:50%">
+                        <p
+                            style="font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:#767676">支払います</p>{{#if is_practice_details}} {{！ - <p
+                            style="font-size:20px;font-weight:700;margin:11px 0">{{doctor_name}}</p>--}}<p><span
+                                style="color:#626262;border-bottom:transparent">ビジネス名：</span>{{practice_name}}</p>
+                        <p><span style="color:#626262;border-bottom:transparent">メール：</span>{{practice_email}}</p>
+                        <p><span style="color:#626262;border-bottom:transparent">電話 ：</span>{{practice_mobile}}</p>{{それ以外}} {{！ - <p style="font-size:20px;font-weight:700;margin:11px 0">{{doctor_name}}</p>--}}<p>
+                            <span style="color:#626262;border-bottom:transparent">メール：</span>{{doctor_email}}</p>
+                        <p><span style="color:#626262;border-bottom:transparent">電話 ：</span>{{doctor_mobile}}</p>{{/もし}}</div>
+                </div>
+                <div
+                    style="width:100%;border-radius:4px;border:1px solid #000;display:flex;flex-wrap:wrap;margin:30px 0 10px 0;overflow:hidden">
+                    <div
+                        style="width:50%;background:#0a5094;text-align:center;color:#fff;font-size:22px;border-bottom:1px solid #000;padding:15px 0">
+                        Next Payment Date</div>
+                    <div
+                        style="width:50%;background:#0a5094;text-align:center;color:#fff;font-size:22px;border-bottom:1px solid #000;padding:15px 0">繰り返し金額</div>
+                    <div
+                        style="width:50%;text-align:center;padding:15px 0;font-size:23px;border-right:1px solid #d7d7d7;font-weight:700">{{next_payment_date}}</div>
+                    <div style="width:50%;text-align:center;padding:15px 0;font-size:23px;font-weight:700">$ {{totalRecurringamount}}<span
+                            style="border-bottom:transparent;color:grey;font-size:15px;font-weight:400"><br>{{繰り返し金額}}</span>
+                    </div>
+                </div>
+                <div style="font-size:16px"><b>注：すべての支払いは{{statement_descriptor}}として表示されます
+                        あなたの銀行/カードステートメント。</b></div>
+                <h4 style="font-size:23px;font-weight:700;margin-top:20px;text-align:left">支払い計画の詳細</h4>
+                <div style="display:flex;flex-wrap:wrap;border:1px solid #000;border-radius:4px">
+                    <div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>東。コストサービス</p>
+                        <p style="font-size:17px;font-weight:700">{{Treatment_Amount}}</p>
+                    </div>
+                    <div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>EST（東部基準時。支払い計画額</p>
+                        <p style="font-size:17px;font-weight:700">{{financed_amount}}</p>
+                    </div>
+                    <div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>{{#if is_arv2_partial_payment}} partial Payment {{else}}頭金{{/if}}</p>
+                        <p style="font-size:17px;font-weight:700">{{downpayment額}}</p>
+                    </div>{{#if is_deferred_contract}}<div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>金利（延期中）</p>
+                        <p style="font-size:17px;font-weight:700">興味がありません</p>
+                    </div>
+                    <div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p style="line-height: 1 !important; width: 105%;">金利（延期後）{{#if if_applable}}（該当する場合） /支払いの紛失 /契約編集：{{ / if}}</p>
+                        <p style="font-size:17px;font-weight:700;margin-top:-8px">{{金利}} 
+                            {{#if is_deferred_contract_1}}
+                            {{それ以外}}
+                                {{#if is_compounded_interest}}<sup>c</sup>{{それ以外}}<sup>f</sup>{{/もし}}
+                            {{/もし}}</p>
+                    </div>{{それ以外}}<div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>金利</p>
+                        <p style="font-size:17px;font-weight:700">{{interest_rate}} {{#if check_interest}} {{#if
+                            is_compounded_interest}}<sup>c</sup>{{それ以外}}<sup>f</sup>{{/もし}}
+                            {{/もし}}</p>
+                    </div>{{/もし}}<div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>支払いの総数</p>
+                        <p style="font-size:17px;font-weight:700">{{number_of_payments}}</p>
+                    </div>{{#if is_deferred_contract}}<div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>延期された期間</p>
+                        <p style="font-size:17px;font-weight:700">{{deferred_duration}}</p>
+                    </div>{{/もし}}<div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>顧客の支払い額</p>
+                        <p style="font-size:17px;font-weight:700">{{patient_payoff_amount}}</p>
+                    </div>
+                    <div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>総バランス</p>
+                        <p style="font-size:17px;font-weight:700">{{残り額}}</p>
+                    </div>
+                    <div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>登録日</p>
+                        <p style="font-size:17px;font-weight:700">{{date_added}}</p>
+                    </div>
+                    <div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>繰り返し開始日</p>
+                        <p style="font-size:17px;font-weight:700">{{開始日}}</p>
+                    </div>
+                    <div
+                        style="width:20%;padding:10px 13px 14px 18px;border-right:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;height:112px;display:flex;flex-direction:column;justify-content:flex-end">
+                        <p>残りの支払い</p>
+                        <p style="font-size:17px;font-weight:700">{{resight_payments}}</p>
+                    </div>
+                </div>
+                <div style="text-align:right;margin-top:12px;color:grey">F：固定利息、C：複利</div>
+                <div style="width:100%;position:absolute;bottom:30px;left:0;padding:12px 5rem">
+                    <div style="width:100%;display:flex;justify-content:space-between">
+                        <div
+                            style="width:max-content;width:max-content;display:flex;flex-direction:column;justify-content:center">{{#if from_split}}<label style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">契約はリモートで行われました
+                                    の上</span><b>{{date_added}} at {{contract_time}}</b>{{#if show_ip}}<br><label
+                                    style="font-size:12px;font-weight:400"><span
+                                        style="color:grey;border-bottom:none">IP：</span><b>{{ip_address}}</b></label>{{/もし}}</label>{{それ以外}}<label style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">契約で行われた契約
+                                    の上</span><b>{{date_added}} at {{contract_time}}</b>{{#if show_ip}}<br><label
+                                    style="font-size:12px;font-weight:400"><span
+                                        style="color:grey;border-bottom:none">IP：</span><b>{{ip_address}}</b></label>{{/もし}}</label>{{/もし}}</div>{{#if Patient Signature}}<div style="text-align:right;max-width:35%;">
+                                <img src="{{patient_signature}}" id="signImg" style="height:60px; max-width:100%;" />
+                                <p style="font-size: 12px;color:grey">顧客の署名</p>
+                            </div>{{/もし}}</div>
+                    <div>
+                        <p style="font-size:12px;font-weight:400;color:grey">{{#if is_practice_details}}
+                            {{practice_name}} ||   
+                            {{practice_mobile}} ||    {{practice_email}} {{else}}
+                            {{doctor_mobile}} ||    {{doctor_email}} {{/if}}</p>
+                    </div>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <div></div>
+                <p style="width:fit-content;color:grey">{{total_pages}}の1ページ</p>
+            </div>
+        </div>{#if is_service_record_or_payments}}<div class="A4"
+            style="page-break-before:always;height:1200px;width:850px;display:table;position:relative">
+            <div class="top_blue_strip" style="width:100%;height:10px;background-color:#0a5094"></div>
+            <div class="headerLogo" style="display:flex;margin:40px 40px 0 40px">
+                <div style="width:20%"><img src="{{doctor_image}}" style="max-width:100%;max-height:60px"></div>
+                <div style="width:52%;font-size:27px;font-weight:700;text-align:center">
+                    <p>支払い計画契約</p><img src="images/PNG/powered_by_deneftis.svg" style="width:31%">
+                </div>
+                <div style="margin-top:20px">
+                    <p>契約コード：<b>{{contrict_code}}</b></p>
+                    <p>契約ステータス：<b>{{payment_status}}</b></p>
+                </div>
+            </div>
+            <div class="content" style="height:1045px">{{#if is_service_record}}<h5
+                    style="font-size:23px;font-weight:700;margin-top:20px;text-align:left">サービスコストの詳細</h5>{{/もし}}
+                {{#if is_service_record}}<div
+                    style="display:flex;flex-wrap:wrap;border:1px solid #000;border-radius:4px">
+                    <div style="background:#0a5094;width:100%;display:flex;color:#fff">
+                        <div style="width:20%;padding:18px">S.いいえ。</div>
+                        <div
+                            style="width:60%;padding:18px;border-left:1px solid #d7d7d7;border-right:1px solid #d7d7d7">サービス</div>
+                        <div style="width:20%;padding:18px">価格</div>
+                    </div>{{#each ServiceRecord}}<div class="serviceTable"
+                        style="width:100%;display:flex;flex-wrap:wrap">
+                        <div style="width:20%;padding:18px">{{索引}}</div>
+                        <div
+                            style="width:60%;padding:18px;border-left:1px solid #d7d7d7;border-right:1px solid #d7d7d7;word-break:break-all">{{サービス}}</div>
+                        <div style="width:20%;padding:18px;word-break:break-all">{{価格}}</div>
+                    </div>{{/それぞれ}}</div>{{/もし}}
+                {#if show_first_page_payments}}<div>
+                    <h4 style="font-size:23px;font-weight:700;margin-top:20px;text-align:left">支払いの詳細</h4>
+                    <div
+                        style="width:100%;margin-top:20px;border-radius:4px;background-color:#fff;padding:0;border:1px solid #000">
+                        <table style="border-collapse:collapse;width:100%">
+                            <thead>
+                                <tr style="font-size:12px;color:#fff;background:#0a5094">{{#if from_business}}<th
+                                        style="padding:18px;text-align:left;font-size:14px;font-weight:normalborder-right: 1px solid #d7d7d7">繰り返し日</th>{{/もし}}<th
+                                        style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">取引日</th>
+                                    <th
+                                        style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">状態</th>
+                                    <th
+                                        style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">支払いタイプ</th>
+                                    <th style="padding:18px;text-align:left;font-size:14px;font-weight:400">取引
+                                        額</th>
+                                </tr>
+                            </thead>
+                            <tbody>{{＃each firstPagePayments}}<tr
+                                    style="font-size:18px;color:#000;border-top:1px solid #d7d7d7">{{#if from_business}}<th
+                                        style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">{{payment_date}}</th>{{/もし}}<th
+                                        style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">{{date_added}}</th>
+                                    <th
+                                        style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">{{payment_status}}</th>
+                                    <th
+                                        style="padding:18px;text-align:left;text-transform:capitalize;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">{{pt_name}}</th>
+                                    <th
+                                        style="padding:18px;text-align:left;text-transform:capitalize;font-size:14px;font-weight:400">{{控除された金額}}</th>
+                                </tr>{{/それぞれ}}</tbody>
+                        </table>
+                    </div>{{#if is_only_one_payment_pages}}<div style="margin-top:5px;font-size:16px"><b>注：すべて
+                            支払いは、銀行/カードステートメントに{{Statement_descriptor}}として表示されます。</b>
+                    </div>{{/もし}}</div>{{/もし}}</div>
+            <div style="width:100%;position:absolute;bottom:30px;left:0;padding:12px 81px">
+                <div style="width:100%;display:flex;justify-content:space-between">
+                    <div
+                        style="width:max-content;width:max-content;display:flex;flex-direction:column;justify-content:center">{{#if from_split}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey">契約はリモートで行われました</span><b>{{date_added}} at
+                                {{contrict_time}}</b>{{#if show_ip}}<br><label
+                                style="font-size:12px;font-weight:400"><span
+                                    style="color:grey">IP：</span><b>{{ip_address}}</b></label>{{/もし}}</label>{{それ以外}}<label style="font-size:12px;font-weight:400"><span style="color:grey">契約
+                                オフィスで作られています
+                                の上</span><b>{{date_added}} at {{contract_time}}</b>{{#if show_ip}}<br><label
+                                style="font-size:12px;font-weight:400"><span
+                                    style="color:grey">IP：</span><b>{{ip_address}}</b></label>{{/もし}}</label>{{/もし}}</div>{{#if Patient Signature}}<div style="text-align:right;max-width:35%;">
+                            <img src="{{patient_signature}}" id="signImg" style="height:60px; max-width:100%;" />
+                            <p style="font-size: 12px;color:grey">顧客の署名</p>
+                        </div>{{/もし}}</div>
+                <div>
+                    <p style="font-size:12px;font-weight:400;color:grey">{{#if is_practice_details}}
+                        {{practice_name}} ||   
+                        {{practice_mobile}} ||    {{practice_email}} {{else}}
+                        {{doctor_mobile}} ||    {{doctor_email}} {{/if}}</p>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <div></div>
+                <p style="width:fit-content;color:grey">{{total_pages}}の2ページ</p>
+            </div>
+        </div>{{/もし}}
+        {{#if is_payment_pages}} {{#each paybepages}}<div class="A4"
+            style="page-break-before:always;height:1200px;width:850px;display:table;position:relative">
+            <div class="top_blue_strip" style="width:100%;height:10px;background-color:#0a5094"></div>
+            <div class="headerLogo" style="display:flex;margin:40px 40px 0 40px">
+                <div style="width:20%"><img src="{{doctor_image}}" style="max-width:100%;max-height:60px"></div>
+                <div style="width:52%;font-size:27px;font-weight:700;text-align:center">
+                    <p>支払い計画契約</p><img src="images/PNG/powered_by_deneftis.svg" style="width:31%">
+                </div>
+                <div style="margin-top:20px">
+                    <p>契約コード：<b>{{contrict_code}}</b></p>
+                    <p>契約ステータス：<b>{{payment_status}}</b></p>
+                </div>
+            </div>
+            <div class="content" style="height:1045px">
+                <h4 style="font-size:23px;font-weight:700;margin-top:20px;text-align:left">支払いの詳細</h4>
+                <div
+                    style="width:100%;margin-top:20px;border-radius:4px;background-color:#fff;padding:0;border:1px solid #000">
+                    <table style="border-collapse:collapse;width:100%">
+                        <thead>
+                            <tr style="font-size:12px;color:#fff;background:#0a5094">{{#if from_business}}<th
+                                    style="padding:18px;text-align:left;font-size:14px;font-weight:normalborder-right: 1px solid #d7d7d7">繰り返し日</th>{{/もし}}<th
+                                    style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">取引日</th>
+                                <th
+                                    style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">支払いステータス</th>
+                                <th
+                                    style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">支払いタイプ</th>
+                                <th style="padding:18px;text-align:left;font-size:14px;font-weight:400">取引
+                                    額</th>
+                            </tr>
+                        </thead>
+                        <tbody>{{#each Payments}}<tr style="font-size:18px;color:#000;border-top:1px solid #d7d7d7">{{#if from_business}}<th
+                                    style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">{{payment_date}}</th>{{/もし}}<th
+                                    style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">{{date_added}}</th>
+                                <th
+                                    style="padding:18px;text-align:left;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">{{payment_status}}</th>
+                                <th
+                                    style="padding:18px;text-align:left;text-transform:capitalize;font-size:14px;font-weight:400;border-right:1px solid #d7d7d7">{{pt_name}}</th>
+                                <th
+                                    style="padding:18px;text-align:left;text-transform:capitalize;font-size:14px;font-weight:400">{{控除された金額}}</th>
+                            </tr>{{/それぞれ}}</tbody>
+                    </table>
+                </div>{{#if is_only_one_payment_pages}}<div style="margin-top:5px;font-size:16px"><b>注：すべて
+                        支払いは、銀行/カードステートメントに{{Statement_descriptor}}として表示されます。</b></div>{{/もし}}</div>
+            <div style="width:100%;position:absolute;bottom:30px;left:0;padding:12px 81px">
+                <div style="width:100%;display:flex;justify-content:space-between">
+                    <div
+                        style="width:max-content;width:max-content;display:flex;flex-direction:column;justify-content:center">{{#if from_split}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey">契約はリモートで行われました</span><b>{{date_added}} at
+                                {{contrict_time}}</b>{{#if show_ip}}<br><label
+                                style="font-size:12px;font-weight:400"><span
+                                    style="color:grey">IP：</span><b>{{ip_address}}</b></label>{{/もし}}</label>{{それ以外}}<label style="font-size:12px;font-weight:400"><span style="color:grey">契約
+                                オフィスで作られています
+                                の上</span><b>{{date_added}} at {{contract_time}}</b>{{#if show_ip}}<br><label
+                                style="font-size:12px;font-weight:400"><span
+                                    style="color:grey">IP：</span><b>{{ip_address}}</b></label>{{/もし}}</label>{{/もし}}</div>{{#if Patient Signature}}<div style="text-align:right;max-width:35%;">
+                            <img src="{{patient_signature}}" id="signImg" style="height:60px; max-width:100%;" />
+                            <p style="font-size: 12px;color:grey">顧客の署名</p>
+                        </div>{{/もし}}</div>
+                <div>
+                    <p style="font-size:12px;font-weight:400;color:grey">{{#if is_practice_details}}
+                        {{practice_name}} ||   
+                        {{practice_mobile}} ||    {{practice_email}} {{else}}
+                        {{doctor_mobile}} ||    {{doctor_email}} {{/if}}</p>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <div></div>
+                <p style="width:fit-content;color:grey">{{total_pages}}のページ{{current_page}}}</p>
+            </div>
+        </div>{{/各}} {{/of}} {{！ -  {{#if not download_by_admin}}  - }}}<div class="A4"
+            style="page-break-before:always;height:1200px;width:850px;display:table;position:relative">
+            <div class="top_blue_strip" style="width:100%;height:10px;background-color:#0a5094"></div>
+            <div class="content" style="margin:0 40px">
+                <h4 style="font-size:23px;font-weight:700;margin-top:50px;text-align:left">助けが必要です</h4>
+                <ul class="helpPage">
+                    <li>支払い日を変更/変更します</li>{{!--<li>契約を編集/キャンセルします</li>--}}<li>次に支払います
+                        定期的な支払い</li>
+                    <li>支払いソースを追加または変更します</li>
+                    <li>実行中の契約の金額を支払います</li>
+                    <li>部分的な支払い</li>
+                    <li>問題を報告しますか？<br><span
+                            style="font-size:14px;color:grey;border-bottom:none;font-weight:400">にメールします<span
+                                style="color:#0a5094;border-bottom:none">support@denefits.com</span>または問題を報告します
+                            Denefitsアプリ経由</span></li>
+                </ul>
+                <h4 style="font-size:21px;font-weight:700;margin-top:20px;text-align:left;color:#0a5094"><b>デネフィット
+                        顧客アプリ</b>です<b>ワンストップソリューション</b>支払い計画関連のすべての問題について。</h4>
+                <p style="margin-top:21px;font-size:18px">スキャンしてアプリをダウンロードして、すべてを解決できるようになります
+                    わずか数回クリックしてクエリ。</p>
+                <div style="display:flex;flex-direction:column;align-items:center;margin-top:60px">{{！ -  {{＃もし
+                    download_by_doctor}}  - }} {{！ - <img src="/images/PNG/QR_doctor_app.svg" style="width:166px"> - }}
+                    {{！ -  {{それ以外}}  - }}<img src="images/PNG/QR_denefits_App.svg" style="width:166px">{{！ -  {{/もし}}
+
+                     - }}<h4
+                        style="font-size:26px;font-weight:700;margin:20px 0 27px 0;text-align:left;width:max-content">スキャンしてアプリをダウンロードします</h4>
+                    <div style="display:flex;justify-content:space-between;width:310px">{{！ -  {{＃もし
+                        download_by_doctor}}<a
+                            href="https://play.google.com/store/apps/details?id=bhct.denefits.doctor">
+                            <div
+                                style="width:147px;font-size:10px;color:#fff;height:47px;background:#1e4468;border-radius:4px;padding:7px 6px">
+                                <img src="/images/PNG/playstore.png" style="width:24px;margin:3px 11px;float:left">
+                                <p style="text-decoration:underline;text-decoration-color:#1e4468">入る<br><span
+                                        style="border-bottom:none;font-size:15px">Google Play</span></p>
+                            </div>
+                        </a><a href="https://apps.apple.com/us/app/denefits/id1253338581">
+                            <div
+                                style="width:147px;font-size:10px;color:#fff;height:47px;background:#1e4468;border-radius:4px;padding:7px 6px">
+                                <img src="/images/PNG/apple_app_store.png"
+                                    style="width:22px;margin:3px 11px;float:left">
+                                <p style="text-decoration:underline;text-decoration-color:#1e4468">ダウンロードしてください
+                                    <br><span style="border-bottom:none;font-size:15px">App Store</span></p>
+                            </div>
+                        </a>{{それ以外}}  - }}<a href="https://play.google.com/store/apps/details?id=bhct.denefits.patient">
+                            <div
+                                style="width:147px;font-size:10px;color:#fff;height:47px;background:#1e4468;border-radius:4px;padding:7px 6px">
+                                <img src="images/PNG/playstore.png" style="width:24px;margin:3px 11px;float:left">
+                                <p style="text-decoration:underline;text-decoration-color:#1e4468">入る<br><span
+                                        style="border-bottom:none;font-size:15px">Google Play</span></p>
+                            </div>
+                        </a><a href="https://apps.apple.com/us/app/denefits-patient/id1386620496?ls=1">
+                            <div
+                                style="width:147px;font-size:10px;color:#fff;height:47px;background:#1e4468;border-radius:4px;padding:7px 6px">
+                                <img src="images/PNG/apple_app_store.png"
+                                    style="width:22px;margin:3px 11px;float:left">
+                                <p style="text-decoration:underline;text-decoration-color:#1e4468">ダウンロードしてください
+                                    <br><span style="border-bottom:none;font-size:15px">App Store</span></p>
+                            </div>
+                        </a>{{！ -  {{/もし}}
+                         - }}</div><a href="https://www.denefits.com/" style="text-decoration:none">
+                        <p style="font-size:19px;color:#0a5094;margin-top:11px;width:fit-content">www.denefits.com</p>
+                    </a>
+                </div>
+            </div>
+            <div style="width:100%;position:absolute;bottom:30px;left:0;padding:12px 5rem">
+                <div style="width:100%;display:flex;justify-content:space-between">
+                    <div
+                        style="width:max-content;width:max-content;display:flex;flex-direction:column;justify-content:center">{{#if from_split}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">契約はリモートで行われました</span><b>{{date_added}}
+                                {{contract_time}}</b>{{#if show_ip}}<br><label
+                                style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP：</span><b>{{ip_address}}</b></label>{{/もし}}</label>{{それ以外}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">契約
+                                オフィスで作られています</span><b>{{date_added}} at {{contract_time}}</b>{{＃もし
+                            show_ip}}<br><label style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP：</span><b>{{ip_address}}</b></label>{{/もし}}</label>{{/もし}}</div>{{#if Patient Signature}}<div style="text-align:right;max-width:35%;">
+                            <img src="{{patient_signature}}" id="signImg" style="height:60px; max-width:100%;" />
+                            <p style="font-size: 12px;color:grey">顧客の署名</p>
+                        </div>{{/もし}}</div>
+                <div>
+                    <p style="font-size:12px;font-weight:400;color:grey">{{#if is_practice_details}}
+                        {{practice_name}} ||   
+                        {{practice_mobile}} ||    {{practice_email}} {{else}}
+                        {{doctor_mobile}} ||    {{doctor_email}} {{/if}}</p>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <img src="images/PNG/powered_by_deneftis.svg" style="width:145px">
+                <p style="width:fit-content;color:grey">{{0]}}の{{attol_pages}}} {next_page。[0]}}}</p>
+            </div>
+        </div>{{！ -  {{/もし}}  - }}</div>{{/もし}}
+    {{#if is_show_closure_form}}<div class="main-container" id="A4"
+        style="background:#fff;max-width:970px;font-family:Poppins,sans-serif;font-size:14px">
+        <div class="A4" style="page-break-before:always;height:1200px;width:850px;margin:auto">
+            <div class="content">
+                <div class="outer-wrapper">
+                    <p class="watermark">{{practice_name}}</p>
+                    <div class="inner-wrapper">
+                        <div class="row-full text-center">
+                            <h1>Tila開示声明<p class="py-3" style="font-size:16px!important">分割払い
+                                    支払い計画契約</p>
+                            </h1>
+                        </div>
+                        <div class="row-full d-flex row-top" style="border-bottom:1px solid #000">
+                            <div class="row-half" style="border-right:1px solid #000">
+                                <div class="col" style="border-bottom:1px solid #000"><label>の日付
+                                        合意：</label><span>{{date_added}}</span></div>
+                                <div class="col"><label>仕事：</label><span>{{Issuer_name}}</span></div>
+                                <div class="col"><label>住所：</label><span>{{Issuer_Address}}</span></div>
+                                <div class="col"><label>市、州：</label><span>{{Issuer_city_address}}</span></div>
+                                <div class="col"><label>お問い合わせメール：</label><span
+                                        style="word-break:break-all">{{Issuer_Email}}</span></div>
+                            </div>
+                            <div class="row-half">
+                                <div class="col" style="border-bottom:1px solid #000"><label>契約
+                                        番号：</label><span>{{contrict_code}}</span></div>
+                                <div class="col"><label>顧客の名前：</label><span
+                                        style="text-transform:capitalize">{{customer_name}}</span></div>
+                                <div class="col"><label>住所：</label><span>{{patient_only_address}}</span>
+                                </div>
+                                <div class="col"><label>市、州：</label><span>{{city}} {{state_name}} {{zip}}</span>
+                                </div>
+                                <div class="col"><label>電話
+                                        番号：</label><span>{{patient_mobile_formatted}}</span></div>
+                                <div class="col" style="margin-bottom:5px">
+                                    <label>メール：</label><span>{{patient_email}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-full d-flex row-top" style="border-bottom:1px solid #000">
+                            <div class="row-half">
+                                <div class="col"><label>サービサー：</label><span>Denefits LLC</span></div>{{!--<div class="col"><label>住所：</label><span>16500ベイクpkwy</span></div>--}}<div class="col"><label>市、州：</label><span>アーバイン、92618</span></div>
+                                <div class="col"><label>お問い合わせメール：</label><span
+                                        style="word-break:break-all">support@denefits.com</span></div>
+                            </div>
+                        </div>
+                        <div class="row-full row-cal" style="padding:15px">{{#if is_deferred_contract}}<div class="col-one-fifth" style="border:1px solid #000;padding:10px;border-right:0">
+                                <label>金利（延期中）</label>
+                                <p></p>{{!--<p>年間料金としてのクレジットの費用。</p>--}}<div
+                                    style="width:90%;float:left;font-weight:600;font-size:19px">興味がありません</div>
+                            </div>
+
+                             <div class="col-one-fifth" style="border:1px solid #000;padding:10px;border-right:0">
+                                <label>金利（延期後）</label> {{#if if_applicable}} <p>（該当する場合） /支払いの紛失 /契約編集：</p>{{/もし}}<p></p>{{!--<p>年間料金としてのクレジットの費用。</p>--}}<div
+                                    style="width:90%;float:left;font-weight:600;font-size:19px">{{金利}} 
+                                    {{#if is_deferred_contract_1}}
+                                    {{それ以外}}
+                                        {{#if is_compounded_interest}}<sup>c</sup>{{それ以外}}<sup>f</sup>{{/もし}}
+                                    {{/もし}}</div>
+                            </div>{{それ以外}}<div class="col-one-fifth" style="border:1px solid #000;padding:10px;border-right:0">
+                                <label>年率</label>
+                                <p></p>{{!--<p>年間料金としてのクレジットの費用。</p>--}}<div
+                                    style="width:90%;float:left;font-weight:600;font-size:19px">{{金利}} 
+                                    {{#if is_deferred_contract_1}}
+                                    {{それ以外}}
+                                        {{#if is_compounded_interest}}<sup>c</sup>{{それ以外}}<sup>f</sup>{{/もし}}
+                                    {{/もし}}</div>
+                            </div>{{/もし}}<div class="col-one-fifth" style="border:1px solid #000;padding:10px;border-right:0">
+                                <label>財務料</label>{{!--<p>クレジットが費用がかかります。</p>--}}<p></p>
+                                <div style="width:95%;float:right;font-weight:600;padding-left:5px;font-size:19px">{{gent_charged}}</div>
+                            </div>
+                            <div class="col-one-fifth" style="border:1px solid #000;padding:10px;border-right:0">
+                                <label>資金調達された金額</label>{{!--<p>あなたまたはあなたに提供されるクレジットの量
+                                    代わりに。</p>--}}<p></p>
+                                <div style="width:95%;float:right;font-weight:600;padding-left:5px;font-size:19px">{{financed_amount}}</div>
+                            </div>
+                            <div class="col-one-fifth" style="border:1px solid #000;padding:10px;border-right:0">
+                                <label>支払いの合計</label>
+                                <p>すべてのスケジュールされた支払いを行った後に支払う金額。</p>
+                                <div style="width:95%;float:right;font-weight:600;padding-left:5px;font-size:19px">{{total_payable_amount}}</div>
+                            </div>{{#if is_deferred_contract}}
+                            {{それ以外}}<div class="col-one-fifth" style="border:1px solid #000;padding:10px"><label>{{＃もし
+                                    is_arv2_partial_payment}} partial Payment {{else}}頭金{{/if}}</label>
+                                <p>契約作成時に支払う金額。</p>
+                                <div style="width:95%;float:right;font-weight:600;padding-left:5px;font-size:19px">{{downpayment額}}</div>
+                            </div>{{/もし}}</div>
+                        <div class="row-full d-flex row-pay align-center" style="padding:15px;padding-top:0">
+                            <div class="col-one-fourth">
+                                <p style="margin:0;width:100%;line-height:16px;font-size:14px;font-weight:600">あなたの
+                                    支払いスケジュールは次のとおりです。</p>
+                            </div>
+                            <div class="col-one-fourth"><label>支払い数</label>
+                                <div class="cont">{{number_of_payments}}</div>
+                            </div>{{#if is_deferred_contract}}<div class="col-one-fourth"><label>毎月の支払い（中
+                                    延期）</label>
+                                <div class="cont">{{recurring_amount_with_transaction}}</div>
+                            </div>
+                            <div class="col-one-fourth"><label>毎月の支払い（延期後）</label>
+                                <div class="cont">{{next_recurring_amount_with_transaction}}</div>
+                            </div>
+                             <span>{{それ以外}}</span>
+                            <div class="col-one-fourth">{{#if is_pay_using_credee}}<label style="border-right:1px solid #000;">毎週の支払い</label>
+                                <div class="cont" style="border-right:1px solid #000;">{{recurring_amount_with_transaction}}</div>{{それ以外}}<label>毎月の支払い</label>
+                                <div class="cont">{{recurring_amount_with_transaction}}</div>{{/もし}}</div>
+                           <span>{{/もし}}</span>{{#if is_pay_using_credee}}<span></span>{{それ以外}}<div class="col-one-fourth"><label style="border-right:1px solid #000">いつ
+                                    支払いが期限切れです</label>
+                                <div class="cont" style="border-right:1px solid #000">{{recurring_date}} {{#if
+                                    recurring_date}} of各月{{/if}}</div>
+                            </div>{{/もし}}</div>
+                        <div class="row-full row-cont">
+                            <div class="cont-wrap"><label>遅い料金：</label><span>支払いが1日以上経過している場合、遅延支払いごとに$ {{延期料金}}の料金が課されます。</span></div>
+                            <div class="cont-wrap"><label>元払い：</label><span>あなたがあなたの残高を返済する場合
+                                    早期に契約すると、前払いペナルティの対象とはなりません。あなただけになります
+                                    前払いの日付までに発生した利息を請求しました。</span></div>
+                            <div class="cont-wrap"><label style="min-width:10px!important">F：</label><span>修理済み
+                                    興味</span><label style="min-width:10px!important">C：</label><span>化合物
+                                    興味</span></div>{{!--<div class="cont-wrap"><label>安全：</label><span>あなた
+                                    セキュリティの利益を与えています</span><span class="text">{{sixt_flat_fee}}</span>
+                            </div>--}} {{!--<small>追加情報については、契約書類を参照してください
+                                不払い、デフォルト、スケジュールされた日付の前に必要な返済が必要な場合、および
+                                前払いの払い戻しと罰則。</small>--}}</div>
+                        <div class="row-full d-flex row-cont-second">
+                            <div class="row-half">
+                                <div class="cont-wrap"><label style="font-size:18px;font-weight:600">でのあなたの契約
+                                        一目：</label></div>
+                                <div class="cont-wrap"><label></label><span class="text"
+                                        style="border-bottom:1px solid #000">{{Treatment_Amount}}</span><span
+                                        style="margin-left:15px">サービス額</span></div>
+                                <div class="cont-wrap"><label></label><span class="text"
+                                        style="border-bottom:1px solid #000">{{downpayment額}}</span><span
+                                        style="margin-left:15px">{{#if is_arv2_partial_payment}}部分的な支払い
+                                        金額{{else}}頭金額{{/if}}</span></div>
+                                <div class="cont-wrap"><label></label><span class="text"
+                                        style="border-bottom:1px solid #000">{{financed_amount}}</span><span
+                                        style="margin-left:15px">元本</span></div>
+                                <div class="cont-wrap"><label></label><span class="text"
+                                        style="border-bottom:1px solid #000">{{intect_charged_deferred}}</span><span
+                                        style="margin-left:15px">総利息</span></div>
+                                <div class="cont-wrap"><label></label><span class="text"
+                                        style="border-bottom:1px solid #000">{{advance_interest_amount}}</span><span
+                                        style="margin-left:15px">前払い</span></div>
+                                <div class="cont-wrap"><label></label><span class="text"
+                                        style="border-bottom:1px solid #000">{{transaction_fee_payment}}</span><span
+                                        style="margin-left:15px">取引あたりの料金</span></div>
+                                <div class="cont-wrap"><label></label><span class="text"
+                                        style="border-bottom:1px solid #000">{{enrollmentfee}}</span><span
+                                        style="margin-left:15px">登録料</span></div>{{!--<div class="cont-wrap">
+                                    <label></label><span class="text">{{financed_amount}}</span><span>額
+                                        資金調達</span>
+                                </div>--}}</div>
+                            <div class="row-half text-center">
+                                <h3 class="head">これは分割払い契約です。これはローンではありません。
+                                       <br><br>の条件を確認するのはあなたの責任です
+                                    署名する前のこの契約。署名された契約のコピーを受ける権利があります。</h3>
+                            </div>
+                        </div>
+                        <div>{#if is_service_record_small}}<h4 style="padding-top:10px">サービスコストの内訳</h4>
+                            <h4 class="row-half">サービス</h4>
+                            <h4 class="row-half">価格</h4>{{#each ServiceRecord}}<div class="row-half">
+                                <div class="block" style="height:50px;word-break:break-all"><span>{{サービス}}</span>
+                                </div>
+                            </div>
+                            <div class="row-half">
+                                <div class="block" style="height:50px;word-break:break-all"><span>{{価格}}</span></div>
+                            </div>{{/各}} {{/if}}</div>
+                    </div>
+                </div>
+            </div>
+            <div style="width:100%;position:absolute;bottom:30px;left:0;padding:12px 5rem">
+                <div style="width:100%;display:flex;justify-content:space-between">
+                    <div
+                        style="width:max-content;width:max-content;display:flex;flex-direction:column;justify-content:center">{{#if from_split}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">契約はリモートで行われました</span><b>{{date_added}}
+                                {{contract_time}}</b>{{#if show_ip}}<br><label
+                                style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP：</span><b>{{ip_address}}</b></label>{{/もし}}</label>{{それ以外}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">契約
+                                オフィスで作られています</span><b>{{date_added}} at {{contract_time}}</b>{{＃もし
+                            show_ip}}<br><label style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP：</span><b>{{ip_address}}</b></label>{{/もし}}</label>{{/もし}}</div>{{#if Patient Signature}}<div style="text-align:right;max-width:35%;">
+                            <img src="{{patient_signature}}" id="signImg" style="height:60px; max-width:100%;" />
+                            <p style="font-size: 12px;color:grey">顧客の署名</p>
+                        </div>{{/もし}}</div>
+                <div>
+                    <p style="font-size:12px;font-weight:400;color:grey">{{#if is_practice_details}}
+                        {{practice_name}} ||   
+                        {{practice_mobile}} ||    {{practice_email}} {{else}}
+                        {{doctor_mobile}} ||    {{doctor_email}} {{/if}}</p>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid #000;position:absolute;width:100%;bottom:0;padding:10px 60px;display:flex;justify-content:space-between">
+                <img src="images/PNG/powered_by_deneftis.svg" style="width:145px">
+                <p style="width:fit-content;color:grey">{{1]}}の{{total_pages}}のページ{next_page。[1]}}}</p>
+            </div>
+        </div>{{#if is_service_record_large}}<div class="A4"
+            style="page-break-before:always;height:1200px;width:850px;margin:auto">
+            <div class="content">
+                <div class="outer-wrapper">
+                    <p class="watermark">{{practice_name}}</p>
+                    <div class="inner-wrapper">
+                        <div>
+                            <h4 style="padding-top:10px">サービスコストの内訳</h4>
+                            <h4 class="row-half">サービス</h4>
+                            <h4 class="row-half">価格</h4>{{#each ServiceRecord}}<div class="row-half">
+                                <div class="block" style="height:30px;word-break:break-all"><span>{{service}}</span>
+                                </div>
+                            </div>
+                            <div class="row-half">
+                                <div class="block" style="height:30px;word-break:break-all"><span>{{価格}}</span></div>
+                            </div>{{/それぞれ}}</div>
+                    </div>
+                </div>
+            </div>
+            <div style="width:100%;position:absolute;bottom:30px;left:0;padding:12px 5rem">
+                <div style="width:100%;display:flex;justify-content:space-between">
+                    <div
+                        style="width:max-content;width:max-content;display:flex;flex-direction:column;justify-content:center">{{#if from_split}}<label style="font-size:12px;font-weight:400"><span
+                                style="color:grey;border-bottom:none">契約はリモートで行われました</span><b>{{date_added}}
+                                {{contract_time}}</b>{{#if show_ip}}<br><label
+                                style="font-size:12px;font-weight:400"><span
+                                    style="color:grey;border-bottom:none">IP：</span><b>{{ip_address}}</b></label>{{/もし}}</label>
