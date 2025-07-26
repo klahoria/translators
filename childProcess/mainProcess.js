@@ -6,11 +6,11 @@ const TAG_RE = /(<[^>]+>)/g;
 const STYLE_RE = /<style[^>]*>[\s\S]*?<\/style>/gi;
 const WORKER_COUNT = Math.min(4, os.cpus().length);
 
-const workers = [];
+let workers = [];
 let current = 0;
 let taskId = 0;
-const results = {};
-let resolveDone;
+let results = {};
+let initialized = false;
 
 const sendToWorker = (text, lang) =>
   new Promise((resolve) => {
@@ -22,8 +22,11 @@ const sendToWorker = (text, lang) =>
   });
 
 const setupWorkers = () => {
+  if (initialized) return;
+  initialized = true;
+
   for (let i = 0; i < WORKER_COUNT; i++) {
-    const worker = fork("./worker.js");
+    const worker = fork("./childProcess/worker.js");
     worker.on("message", ({ id, translated }) => {
       results[id](translated);
       delete results[id];
@@ -32,7 +35,11 @@ const setupWorkers = () => {
   }
 };
 
-const translateHandlebars = async (tpl, to = "es", out = "translated.handlebars") => {
+const translateHandlebars = async (
+  tpl,
+  to = "es",
+  out = "translated.handlebars"
+) => {
   setupWorkers();
 
   const styles = [];
@@ -55,9 +62,8 @@ const translateHandlebars = async (tpl, to = "es", out = "translated.handlebars"
   console.log(`✅ Output written to ${out}`);
 
   workers.forEach((w) => w.kill());
+  workers = [];
+  initialized = false;
 };
 
-(async () => {
-  const tpl = fs.readFileSync("../contract.handlebars", "utf-8");
-  await translateHandlebars(tpl, "ja", "./contract.ja.handlebars");
-})();
+module.exports = { translateHandlebars };
