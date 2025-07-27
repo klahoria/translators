@@ -4,7 +4,7 @@ const os = require("os");
 
 const TAG_RE = /(<[^>]+>)/g;
 const STYLE_RE = /<style[^>]*>[\s\S]*?<\/style>/gi;
-const WORKER_COUNT = Math.min(4, os.cpus().length);
+const WORKER_COUNT = Math.min(6, os.cpus().length);
 
 // Total number of logical CPU cores
 const cpuCount = os.cpus().length;
@@ -30,6 +30,7 @@ const setupWorkers = () => {
   initialized = true;
 
   for (let i = 0; i < WORKER_COUNT; i++) {
+    console.log("initializing workers");
     const worker = fork("./childProcess/worker.js");
     worker.on("message", ({ id, translated }) => {
       results[id](translated);
