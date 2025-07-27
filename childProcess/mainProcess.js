@@ -16,13 +16,13 @@ let taskId = 0;
 let results = {};
 let initialized = false;
 
-const sendToWorker = (text, lang) =>
+const sendToWorker = (text, from = "en", lang) =>
   new Promise((resolve) => {
     const id = taskId++;
     results[id] = resolve;
     const worker = workers[current];
     current = (current + 1) % workers.length;
-    worker.send({ id, text, lang });
+    worker.send({ id, text, from, lang });
   });
 
 const setupWorkers = () => {
@@ -42,6 +42,7 @@ const setupWorkers = () => {
 
 const translateHandlebars = async (
   tpl,
+  from = "en",
   to = "es",
   out = "translated.handlebars"
 ) => {
@@ -59,7 +60,7 @@ const translateHandlebars = async (
       ? Promise.resolve(t)
       : /___STYLE_(\d+)___/.test(t)
       ? Promise.resolve(styles[+t.match(/\d+/)[0]])
-      : sendToWorker(t, to)
+      : sendToWorker(t, from, to)
   );
 
   const translated = await Promise.all(promises);

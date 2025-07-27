@@ -1,24 +1,20 @@
 const translate = require("@iamtraction/google-translate");
 const { MongoClient } = require("mongodb");
 
-const VAR_RE = /{{[^}]+}}/g;
+const VAR_RE = /({{[^}]+}})/g;
 const VAR_ONLY_RE = /^{{[^}]+}}$/;
+const BLOCK_RE = /^{{[#\/][^}]+}}$/;
+const INLINE_BLOCK_RE = /{{[^}]*}}.*{{\/[^}]*}}/;
 
-// const skip = (s) =>
-//   !s.trim() ||
-//   !/[a-z0-9]/i.test(s) ||
-//   /^[-–_.:;|+*~!@#$%^&()\[\]{}<>"'=\\\/\n\r\t\s]+$/.test(s) ||
-//   VAR_ONLY_RE.test(s.trim());
-
-const BLOCK_RE = /^{{[#\/][^}]+}}$/; // Matches block helpers like {{#if}}, {{/if}}, etc.
-
+// Text skipping logic
 const skip = (s) =>
   !s.trim() ||
-  !/[a-z0-9]/i.test(s) || // no alphanumeric content
-  /^[-–_.:;|+*~!@#$%^&()\[\]{}<>"'=\\\/\n\r\t\s]+$/.test(s) || // symbols only
-  VAR_ONLY_RE.test(s.trim()) || // exact match like {{some_var}}
-  BLOCK_RE.test(s.trim()) || // block helper tags like {{#if condition}}, {{/if}}
-  /{{[^}]*}}.*{{\/[^}]*}}/.test(s.trim()); // inline tag followed by closing like {{guardian}}{{/if}}
+  !/[a-z0-9]/i.test(s) ||
+  /^[-–_.:;|+*~!@#$%^&()\[\]{}<>"'=\\\/\n\r\t\s]+$/.test(s) ||
+  VAR_ONLY_RE.test(s.trim()) ||
+  BLOCK_RE.test(s.trim()) ||
+  INLINE_BLOCK_RE.test(s.trim()) ||
+  !s.replace(/&nbsp;/gi, "").trim();
 
 // MongoDB setup
 const MONGO_URI = "mongodb://localhost:27017";
@@ -31,16 +27,20 @@ const connectMongo = async () => {
   if (collection) return collection;
   const client = await MongoClient.connect(MONGO_URI, {
     useUnifiedTopology: true,
+    monitorCommands: true,
   });
   db = client.db(DB_NAME);
   collection = db.collection(COLLECTION);
   return collection;
 };
 
-const findTranslation = async (original, from, to) => {
+const findTranslation = async (original, from = "en", to) => {
   try {
     const col = await connectMongo();
-    return await col.findOne({ original, from, to });
+    return await col.findOne({
+      original: original.replace(/\s+/g, " ").trim(),
+      to,
+    });
   } catch (err) {
     console.error("❌ MongoDB find error:", err.message);
     return null;
@@ -49,10 +49,11 @@ const findTranslation = async (original, from, to) => {
 
 const saveTranslation = async ({ original, translated, from, to }) => {
   try {
+    if (original == "&nbsp;" || !original.replace(/&nbsp/g, "").trim()) return;
     const col = await connectMongo();
     await col.insertOne({
-      original,
-      translated,
+      original: original.trim(),
+      translated: translated.trim(),
       from,
       to,
       timestamp: new Date(),
@@ -62,51 +63,54 @@ const saveTranslation = async ({ original, translated, from, to }) => {
   }
 };
 
-const translateText = async (text, to, from = "en") => {
+const translateText = async (text, from = "en", to) => {
   if (skip(text)) return text;
 
-  // ✅ Check if translation already exists
-  const existing = await findTranslation(text, from, to);
-  if (existing && existing.translated) {
-    return existing.translated;
-  }
+  const tokens = text.split(VAR_RE); // Includes {{...}} as separate tokens
 
-  const tokens = text.split(VAR_RE);
-  const vars = text.match(VAR_RE) || [];
-
+  let finalFrom = from;
   const translatedTokens = await Promise.all(
     tokens.map(async (t) => {
       if (skip(t)) return t;
 
-      try {
-        const res = await translate(t, { from, to });
-        await saveTranslation({
-          original: text,
-          translated: res.text,
-          from,
-          to,
-        });
+      const cached = await findTranslation(t.trim(), from, to);
+      if (cached?.translated) return cached.translated;
 
-        return res.text;
-      } catch (e) {
-        return t; // fallback
-      }
+      // 🔥 NEW: Split text into smaller sentences
+      const sentences = t.split(/(?<=[.?!])\s+(?=[A-Z])/); // simple sentence splitter
+
+      const translatedSentences = await Promise.all(
+        sentences.map(async (sentence) => {
+          try {
+            const res = await translate(sentence, { from, to });
+
+            // Save each sentence only if it's not already saved
+            await saveTranslation({
+              original: sentence.replace(/\s+/g, " ").trim(),
+              translated: res.text.replace(/\s+/g, " ").trim(),
+              from,
+              to,
+            });
+
+            return res.text;
+          } catch {
+            return sentence;
+          }
+        })
+      );
+
+      return translatedSentences.join(" ");
     })
   );
 
-  const finalText = translatedTokens.reduce(
-    (acc, t, i) => acc + t + (vars[i] || ""),
-    ""
-  );
-
-  // ✅ Save translation to MongoDB
-  return finalText;
+  return translatedTokens.join("");
 };
 
+// Child process handler
 process.on("message", async (msg) => {
   const { id, text, lang, from = "en" } = msg;
-  const translated = await translateText(text, lang, from);
+  const translated = await translateText(text, from, lang);
   process.send({ id, translated });
 });
 
-module.exports = { translate };
+module.exports = { translateText };

@@ -28,7 +28,12 @@ app.post("/upload", upload.single("file"), async (req, res) => {
     const outFilePath = path.join("translated", outFileName);
 
     const content = fs.readFileSync(uploadedFilePath, "utf-8");
-    await translateHandlebars(content, (req.body.language || 'en'), outFilePath);
+    await translateHandlebars(
+      content,
+      req.body.from || "en",
+      req.body.language || "en",
+      outFilePath
+    );
 
     res.download(outFilePath, outFileName, () => {
       fs.unlinkSync(uploadedFilePath);
