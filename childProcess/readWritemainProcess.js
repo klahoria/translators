@@ -2,7 +2,7 @@ const fs = require("fs");
 const { fork } = require("child_process");
 const os = require("os");
 
-const TAG_RE = /(<[^>]+>)/g;
+const TAG_RE = /(<[^>]+>)/g
 const STYLE_RE = /<style[^>]*>[\s\S]*?<\/style>/gi;
 
 const cpuCount = os.cpus().length;
@@ -20,7 +20,7 @@ let initialized = false;
 async function inlineTranslate(text, lang) {
   // For example, just return text for now or simulate translation
   // Replace this with your actual translate logic for single process
-  return text; 
+  return text;
 }
 
 const sendToWorker = (text, lang) =>
@@ -61,7 +61,7 @@ const translateHandlebars = async (tpl, to = "es") => {
     return `___STYLE_${styles.length - 1}___`;
   });
 
-  const tokens = tplCopy.split(TAG_RE);
+  const tokens = tplCopy.split(TAG_RE).filter(Boolean);
 
   if (useWorkers) {
     setupWorkers();

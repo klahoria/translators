@@ -13,7 +13,7 @@ const translateText = async (text, to) => {
   if (skip(text)) return text;
 
   const tokens = text.split(VAR_RE);
-  const vars = text.match(VAR_RE) || [];
+  const vars = (text || "").match(VAR_RE) || [];
 
   const translated = await Promise.all(
     tokens.map(async (t) =>

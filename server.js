@@ -49,7 +49,7 @@ app.post("/upload", upload.single("file"), async (req, res) => {
     let content = fs.readFileSync(uploadedFilePath, "utf-8");
 
     // Assuming translateHandlebars returns translated content string instead of writing file
-    const translatedContent = await translateHandlebars(content, "ja");
+    const translatedContent = await translateHandlebars(content, (req.body.language).trim() || "fr");
 
     // Delete the uploaded file after processing
     fs.unlinkSync(path.join(__dirname,uploadedFilePath));
